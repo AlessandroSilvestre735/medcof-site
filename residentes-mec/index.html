@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-year="2025">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Residentes MEC — Trilhas TEA | MedCof</title>
+  <meta name="description" content="Trilha para residentes MEC: cursos extensivos (base completa) e intensivos (reta final) para a prova do TEA." />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div id="header"></div>
+
+  <main id="main">
+    <header class="page-head">
+      <div class="container">
+        <nav class="breadcrumb" id="breadcrumb" aria-label="Você está aqui"></nav>
+        <span class="eyebrow">Residentes MEC</span>
+        <h1>Trilha para Residentes MEC</h1>
+        <p>Preparação para o TEA voltada a residentes de programas credenciados pelo MEC. Escolha entre uma base completa ou a revisão intensiva de reta final.</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-2" id="hub"></div>
+        <div class="compare-note">
+          <span data-ic="info"></span>
+          <p><b>Como funciona:</b> os cursos <b>extensivos</b> e <b>intensivos</b> ficam em páginas próprias, cada um com seu foco — base sólida ao longo do ano ou reta final de alto rendimento.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Quer ajuda para escolher a duração ideal?</h2>
+          <p>Anual, bianual ou trianual? Fale com a equipe MedCof e alinhe o plano ao seu tempo até a prova.</p>
+          <a class="btn btn-primary btn-lg" href="../matricula.html?produto=Residentes%20MEC">Falar com a equipe</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script>window.SITE_ROOT = "../";</script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>
+    var GID = "residentes-mec";
+    MedCof.renderChrome(GID);
+    MedCof.renderBreadcrumb([{label:"Início", href:"../index.html"}, {label:"Residentes MEC"}]);
+    MedCof.renderHub(GID);
+    document.querySelectorAll("[data-ic]").forEach(function(n){ n.innerHTML = MedCof.icon(n.getAttribute("data-ic")); });
+  </script>
+</body>
+</html>

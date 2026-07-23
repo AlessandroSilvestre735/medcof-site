@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-year="2025">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TEA — Título de Especialista em Anestesiologia | MedCof</title>
+  <meta name="description" content="Preparação para o TEA: cursos extensivos (Regular e Elite) e intensivos (reta final e segunda fase)." />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div id="header"></div>
+
+  <main id="main">
+    <header class="page-head">
+      <div class="container">
+        <nav class="breadcrumb" id="breadcrumb" aria-label="Você está aqui"></nav>
+        <span class="eyebrow">TEA</span>
+        <h1>Título de Especialista em Anestesiologia</h1>
+        <p>Prepare-se para a prova do TEA no seu nível. Comece pela base completa (Regular ou Elite) ou vá direto para a revisão intensiva de reta final.</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-2" id="hub"></div>
+        <div class="compare-note">
+          <span data-ic="info"></span>
+          <p><b>Como funciona:</b> os cursos <b>extensivos</b> e <b>intensivos</b> ficam em páginas próprias. Dentro do extensivo você compara Regular e Elite; no intensivo, os cursos de reta final e segunda fase.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Regular ou Elite? Fale com quem entende</h2>
+          <p>A equipe MedCof te ajuda a escolher a versão ideal do TEA para o seu momento.</p>
+          <a class="btn btn-primary btn-lg" href="../matricula.html?produto=TEA">Falar com a equipe</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script>window.SITE_ROOT = "../";</script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>
+    var GID = "tea";
+    MedCof.renderChrome(GID);
+    MedCof.renderBreadcrumb([{label:"Início", href:"../index.html"}, {label:"TEA"}]);
+    MedCof.renderHub(GID);
+    document.querySelectorAll("[data-ic]").forEach(function(n){ n.innerHTML = MedCof.icon(n.getAttribute("data-ic")); });
+  </script>
+</body>
+</html>

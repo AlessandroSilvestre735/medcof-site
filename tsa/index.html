@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-year="2025">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TSA — Título Superior em Anestesiologia | MedCof</title>
+  <meta name="description" content="Preparação para o TSA nas versões Regular e Elite. Conteúdo avançado para o Título Superior em Anestesiologia." />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div id="header"></div>
+
+  <main id="main">
+    <header class="page-head">
+      <div class="container">
+        <nav class="breadcrumb" id="breadcrumb" aria-label="Você está aqui"></nav>
+        <span class="track-pill ext" data-ic-pre="star">Curso Extensivo</span>
+        <h1>TSA — Título Superior</h1>
+        <p>Preparação avançada para o Título Superior em Anestesiologia. Escolha entre as versões Regular e Elite conforme o nível de acompanhamento.</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="product-grid" id="products"></div>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Buscando também a segunda fase do TSA?</h2>
+          <p>Temos um curso dedicado à prova prática/oral do TSA, com simulações e treino de argumentação.</p>
+          <a class="btn btn-primary btn-lg" href="../segunda-fase/index.html">Ver Segunda Fase</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script>window.SITE_ROOT = "../";</script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>
+    var GID = "tsa";
+    MedCof.renderChrome(GID);
+    MedCof.renderBreadcrumb([{label:"Início", href:"../index.html"}, {label:"TSA"}]);
+    MedCof.renderProducts(GID, "extensivo", "#products");
+  </script>
+</body>
+</html>

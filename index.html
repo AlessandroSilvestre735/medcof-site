@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-year="2025">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MedCof — Preparação para provas de Anestesiologia (ME · TEA · TSA)</title>
+  <meta name="description" content="Escolha sua trilha por objetivo: Residentes SBA, Residentes MEC, TEA, TSA, Segunda Fase e Aperfeiçoamento. Preparação completa para as provas de Anestesiologia." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div id="header"></div>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <span class="eyebrow">Anestesiologia · ME · TEA · TSA</span>
+          <h1>Sua aprovação em Anestesiologia <span class="grad">começa pela trilha certa</span></h1>
+          <p class="lead">Escolha o caminho pelo seu momento de carreira e siga um plano feito para a sua prova. Sem ruído, sem comparações confusas — só o que você precisa estudar.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="#trilhas">Encontrar minha trilha</a>
+            <a class="btn btn-outline btn-lg" href="matricula.html">Falar com a equipe</a>
+          </div>
+          <div class="hero-trust">
+            <div><b>ME · TEA · TSA</b><small>Todas as provas em um só lugar</small></div>
+            <div><b>Extensivo + Intensivo</b><small>Do começo à reta final</small></div>
+            <div><b>2ª Fase</b><small>Prática e argumentação</small></div>
+          </div>
+        </div>
+        <div class="hero-visual reveal">
+          <div class="hero-card">
+            <h3>Por onde você quer começar?</h3>
+            <p style="color:var(--color-muted-fg);font-size:var(--text-sm)">Navegue pelo seu perfil e chegue direto na sua trilha.</p>
+            <a class="path-mini" href="#trilhas">
+              <span class="ic" data-ic="graduation"></span>
+              <span><b>Residente SBA</b><small>Módulos ME1 → ME3</small></span>
+              <span class="arrow" data-ic="arrow"></span>
+            </a>
+            <a class="path-mini" href="#trilhas">
+              <span class="ic" data-ic="certificate"></span>
+              <span><b>Candidato ao TEA</b><small>Regular · Elite · Intensivo</small></span>
+              <span class="arrow" data-ic="arrow"></span>
+            </a>
+            <a class="path-mini" href="#trilhas">
+              <span class="ic" data-ic="star"></span>
+              <span><b>Candidato ao TSA</b><small>Título Superior</small></span>
+              <span class="arrow" data-ic="arrow"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRILHAS (navegação por tipo de procura) -->
+    <section class="section" id="trilhas">
+      <div class="container">
+        <div class="center reveal">
+          <span class="eyebrow">Escolha por objetivo</span>
+          <h2 class="section-title">Qual é o seu momento?</h2>
+          <p class="section-sub">Cada trilha leva você para uma jornada própria. Clique no perfil que combina com você e avance passo a passo.</p>
+        </div>
+        <div class="grid grid-3 product-nav" id="groups" style="margin-top:44px"></div>
+      </div>
+    </section>
+
+    <!-- POR QUE MEDCOF -->
+    <section class="section-tight">
+      <div class="container">
+        <div class="grid grid-3 reveal" data-stagger>
+          <div class="profile-card" style="cursor:default">
+            <div class="card-ic" data-ic="checklist"></div>
+            <h3>Trilha guiada</h3>
+            <p>Você sempre sabe o próximo passo. A navegação te leva do objetivo até o curso ideal, sem se perder.</p>
+          </div>
+          <div class="profile-card" style="cursor:default">
+            <div class="card-ic" data-ic="layers"></div>
+            <h3>Extensivo e Intensivo</h3>
+            <p>Base sólida durante o ano e revisão de alta intensidade na reta final — cada um no seu espaço.</p>
+          </div>
+          <div class="profile-card" style="cursor:default">
+            <div class="card-ic" data-ic="certificate"></div>
+            <h3>Foco em aprovação</h3>
+            <p>Conteúdo, banco de questões e simulados desenhados para o que realmente cai nas provas de Anestesiologia.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Ainda em dúvida sobre a melhor trilha?</h2>
+          <p>Fale com a nossa equipe e receba uma recomendação personalizada para o seu momento de carreira.</p>
+          <a class="btn btn-primary btn-lg" href="matricula.html">Falar com a equipe MedCof</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    MedCof.renderChrome(null);
+    MedCof.renderGroups("#groups");
+    // preenche os ícones marcados com data-ic
+    document.querySelectorAll("[data-ic]").forEach(function(n){ n.innerHTML = MedCof.icon(n.getAttribute("data-ic")); });
+  </script>
+</body>
+</html>

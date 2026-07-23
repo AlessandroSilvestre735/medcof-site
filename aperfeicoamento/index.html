@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-year="2025">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursos de Aperfeiçoamento — AnestUS, ECO e HEMO | MedCof</title>
+  <meta name="description" content="Cursos de aperfeiçoamento MedCof: AnestUS (ultrassonografia), MedcofECO e MedcofHEMO (em breve)." />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div id="header"></div>
+
+  <main id="main">
+    <header class="page-head">
+      <div class="container">
+        <nav class="breadcrumb" id="breadcrumb" aria-label="Você está aqui"></nav>
+        <span class="eyebrow" data-ic-pre="sparkles">Aperfeiçoamento</span>
+        <h1>Cursos de Aperfeiçoamento</h1>
+        <p>Aprofunde-se em temas específicos da Anestesiologia com os cursos avançados MedCof. Novos lançamentos a caminho.</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="product-grid" id="products"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script>window.SITE_ROOT = "../";</script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>
+    var GID = "aperfeicoamento";
+    MedCof.renderChrome(GID);
+    MedCof.renderBreadcrumb([{label:"Início", href:"../index.html"}, {label:"Aperfeiçoamento"}]);
+    MedCof.renderProducts(GID, "unico", "#products");
+  </script>
+</body>
+</html>

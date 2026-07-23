@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-year="2025">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursos Extensivos — Residentes SBA | MedCof</title>
+  <meta name="description" content="Cursos extensivos para residentes SBA: ME Completão, ME1, ME2, ME3 e TSA ME nas durações anual, bianual e trianual." />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div id="header"></div>
+
+  <main id="main">
+    <header class="page-head">
+      <div class="container">
+        <nav class="breadcrumb" id="breadcrumb" aria-label="Você está aqui"></nav>
+        <span class="track-pill ext" data-ic-pre="layers">Curso Extensivo</span>
+        <h1>Extensivos — Residentes SBA</h1>
+        <p>Base completa e progressiva para os módulos ME. Escolha o programa e a duração que cabem no seu tempo até a prova.</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="product-grid" id="products"></div>
+        <div class="compare-note">
+          <span data-ic="info"></span>
+          <p>Procurando revisão de <b>reta final</b>? Os cursos intensivos ficam em uma página separada. <a href="index.html">Voltar para a trilha SBA</a> e escolher <b>Intensivos</b>.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script>window.SITE_ROOT = "../";</script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>
+    var GID = "residentes-sba";
+    MedCof.renderChrome(GID);
+    MedCof.renderBreadcrumb([{label:"Início", href:"../index.html"}, {label:"Residentes SBA", href:"index.html"}, {label:"Extensivos"}]);
+    MedCof.renderProducts(GID, "extensivo", "#products");
+    document.querySelectorAll("[data-ic]").forEach(function(n){ n.innerHTML = MedCof.icon(n.getAttribute("data-ic")); });
+  </script>
+</body>
+</html>

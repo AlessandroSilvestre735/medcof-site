@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-year="2025">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matrícula e Contato | MedCof</title>
+  <meta name="description" content="Fale com a equipe MedCof e garanta sua vaga na trilha ideal para a sua prova de Anestesiologia." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div id="header"></div>
+
+  <main id="main">
+    <header class="page-head">
+      <div class="container">
+        <nav class="breadcrumb" id="breadcrumb" aria-label="Você está aqui"></nav>
+        <h1>Quase lá!</h1>
+        <p>Preencha seus dados que a equipe MedCof entra em contato para concluir sua matrícula e tirar todas as suas dúvidas.</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid" style="grid-template-columns: 1.3fr .9fr; gap: 32px; align-items:start">
+          <form class="form-card" id="lead-form" novalidate>
+            <div class="grid grid-2" style="gap:18px">
+              <div class="field"><label for="nome">Nome completo</label><input id="nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" required /></div>
+              <div class="field"><label for="email">E-mail</label><input id="email" name="email" type="email" placeholder="voce@email.com" autocomplete="email" required /></div>
+            </div>
+            <div class="grid grid-2" style="gap:18px">
+              <div class="field"><label for="tel">WhatsApp</label><input id="tel" name="tel" type="tel" placeholder="(00) 00000-0000" autocomplete="tel" /></div>
+              <div class="field"><label for="perfil">Seu momento</label>
+                <select id="perfil" name="perfil">
+                  <option value="">Selecione…</option>
+                  <option>Residente SBA</option>
+                  <option>Residente MEC</option>
+                  <option>Candidato ao TEA</option>
+                  <option>Candidato ao TSA</option>
+                  <option>Segunda Fase</option>
+                  <option>Aperfeiçoamento</option>
+                </select>
+              </div>
+            </div>
+            <div class="field"><label for="produto">Curso de interesse</label><input id="produto" name="produto" type="text" placeholder="Ex.: ME Completão Anual" /></div>
+            <div class="field"><label for="msg">Mensagem (opcional)</label><textarea id="msg" name="msg" rows="4" placeholder="Conte pra gente seu objetivo e quando é sua prova."></textarea></div>
+            <button class="btn btn-primary btn-lg btn-block" type="submit" data-ic-pre="chat">Enviar e falar com a equipe</button>
+            <p style="font-size:var(--text-xs);color:var(--color-muted-fg);margin-top:14px">Ao enviar, você concorda em ser contatado pela equipe MedCof. Seus dados não são compartilhados.</p>
+          </form>
+
+          <aside style="display:flex;flex-direction:column;gap:18px">
+            <div class="summary-box">
+              <div class="lbl">Curso selecionado</div>
+              <div class="val" id="produto-sel">Nenhum curso selecionado</div>
+            </div>
+            <div class="form-card" style="padding:22px">
+              <h3 style="font-size:var(--text-lg);margin-bottom:12px">Por que estudar com a MedCof?</h3>
+              <ul class="pc-feats">
+                <li><span data-ic="check"></span><span>Trilhas específicas para cada prova</span></li>
+                <li><span data-ic="check"></span><span>Banco de questões e simulados</span></li>
+                <li><span data-ic="check"></span><span>Preparação também para a 2ª fase</span></li>
+                <li><span data-ic="check"></span><span>Suporte próximo até o dia da prova</span></li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    MedCof.renderChrome(null);
+    MedCof.renderBreadcrumb([{label:"Início", href:"index.html"}, {label:"Matrícula"}]);
+    // Preenche o curso vindo por ?produto=
+    var params = new URLSearchParams(location.search);
+    var prod = params.get("produto");
+    if (prod) {
+      document.getElementById("produto").value = prod;
+      document.getElementById("produto-sel").textContent = prod;
+    }
+    // Placeholder: o Dev deve conectar a um checkout/CRM/e-mail real.
+    document.getElementById("lead-form").addEventListener("submit", function(e){
+      e.preventDefault();
+      alert("Protótipo: aqui o Dev conecta o envio ao checkout, CRM ou e-mail da MedCof.");
+    });
+  </script>
+</body>
+</html>

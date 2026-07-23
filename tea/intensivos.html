@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-year="2025">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursos Intensivos — TEA | MedCof</title>
+  <meta name="description" content="Cursos intensivos para o TEA: HIIT TEA (reta final) e Segunda Fase TEA." />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div id="header"></div>
+
+  <main id="main">
+    <header class="page-head">
+      <div class="container">
+        <nav class="breadcrumb" id="breadcrumb" aria-label="Você está aqui"></nav>
+        <span class="track-pill int" data-ic-pre="bolt">Curso Intensivo</span>
+        <h1>Intensivos — TEA</h1>
+        <p>Revisão de alta intensidade e preparação para a segunda fase do TEA. Ideal para a reta final rumo ao título.</p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+        <div class="product-grid" id="products"></div>
+        <div class="compare-note">
+          <span data-ic="info"></span>
+          <p>Quer uma <b>base completa</b> (Regular ou Elite)? Os cursos extensivos ficam em uma página separada. <a href="index.html">Voltar para a trilha TEA</a> e escolher <b>Extensivos</b>.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script>window.SITE_ROOT = "../";</script>
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>
+    var GID = "tea";
+    MedCof.renderChrome(GID);
+    MedCof.renderBreadcrumb([{label:"Início", href:"../index.html"}, {label:"TEA", href:"index.html"}, {label:"Intensivos"}]);
+    MedCof.renderProducts(GID, "intensivo", "#products");
+  </script>
+</body>
+</html>
