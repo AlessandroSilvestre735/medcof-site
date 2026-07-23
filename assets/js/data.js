@@ -153,8 +153,9 @@ window.SITE = {
       feats:["Trilha TSA completa","1 ano de acesso","Banco de questões + simulados avançados"],
       tiers:[ {name:"TSA Regular", price:null, note:"Aulas + material + questões"}, {name:"TSA Elite", price:null, note:"Regular + mentorias, correções e extras", elite:true} ] },
 
-    /* ===== TSA — INTENSIVOS (adicionar aqui quando houver; ex.: HIIT TSA) ===== */
-    /* (sem cursos por enquanto — a página de intensivos do TSA mostra "em breve") */
+    /* ===== TSA — INTENSIVOS ===== */
+    { id:"hiit-tsa", group:"tsa", track:"intensivo", name:"HIIT TSA", tagline:"Reta final de alta intensidade para o TSA.", badge:{text:"Reta final",type:"hot"}, featured:true, price:null,
+      feats:["Revisão intensiva dos temas quentes","Simulados cronometrados","Foco em desempenho na prova"] },
 
     /* ===== TSA — SEGUNDA FASE ===== */
     { id:"segunda-fase-tsa", group:"tsa", track:"segunda-fase", name:"Segunda Fase TSA", tagline:"Treino dedicado para a 2ª fase do TSA.", price:null,

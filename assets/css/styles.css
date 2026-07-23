@@ -297,6 +297,21 @@ main { flex: 1 0 auto; }
 .tier-price .price-value { font-size: var(--text-lg); }
 .tier .btn { grid-column: 2; padding: 9px 18px; min-height: 40px; font-size: .9rem; white-space: nowrap; }
 
+/* Carrossel de tiers: Elite primeiro, Regular pela setinha */
+.tier-carousel { margin-top: 2px; }
+.tier-viewport { overflow: hidden; border-radius: var(--radius); }
+.tier-track { display: flex; transition: transform .35s var(--ease); }
+.tier-track > .tier { flex: 0 0 100%; }
+.tier-controls { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 12px; }
+.tier-nav { width: 34px; height: 34px; border-radius: 999px; background: var(--color-surface); border: 1px solid var(--color-border-strong); display: grid; place-items: center; color: var(--color-foreground); flex: none; transition: border-color .2s var(--ease), color .2s var(--ease), opacity .2s var(--ease); }
+.tier-nav svg { width: 18px; height: 18px; }
+.tier-nav.prev svg { transform: rotate(180deg); }
+.tier-nav:hover:not([disabled]) { border-color: var(--color-primary); color: var(--color-primary-dark); }
+.tier-nav[disabled] { opacity: .3; cursor: default; }
+.tier-dots { display: flex; align-items: center; gap: 6px; }
+.tier-dot { width: 7px; height: 7px; padding: 0; border: none; border-radius: 999px; background: var(--color-border-strong); cursor: pointer; transition: width .2s var(--ease), background .2s var(--ease); }
+.tier-dot.active { background: var(--color-primary); width: 20px; }
+
 /* ----------------------------------------------------------------------------
    9. BREADCRUMB + PAGE HEADER
    ---------------------------------------------------------------------------- */

@@ -190,7 +190,9 @@
     var feats = (p.feats||[]).map(function(f){return '<li>'+icon("check")+'<span>'+f+'</span></li>';}).join("");
     var body, foot="";
     if(p.tiers){
-      var tiers = p.tiers.map(function(t){
+      // Elite sempre primeiro; Regular vem depois (navegável pela setinha)
+      var ordered = p.tiers.slice().sort(function(a,b){ return (b.elite?1:0)-(a.elite?1:0); });
+      var slides = ordered.map(function(t){
         return ''+
         '<div class="tier'+(t.elite?" elite":"")+'">'+
           '<span class="tier-name">'+t.name+(t.elite?badgeHTML({text:"Elite",type:"elite"}):"")+'</span>'+
@@ -199,7 +201,22 @@
           '<a class="btn btn-primary" href="'+ctaHref(p.name,t.name)+'">Matricular</a>'+
         '</div>';
       }).join("");
-      body = '<ul class="pc-feats">'+feats+'</ul><div class="tiers">'+tiers+'</div>';
+      var tiersHTML;
+      if(ordered.length>1){
+        var dots = ordered.map(function(t,i){ return '<button class="tier-dot'+(i===0?" active":"")+'" data-go="'+i+'" aria-label="Ver '+t.name+'"></button>'; }).join("");
+        tiersHTML = ''+
+        '<div class="tier-carousel" data-index="0">'+
+          '<div class="tier-viewport"><div class="tier-track">'+slides+'</div></div>'+
+          '<div class="tier-controls">'+
+            '<button class="tier-nav prev" aria-label="Opção anterior" disabled>'+icon("arrow")+'</button>'+
+            '<div class="tier-dots">'+dots+'</div>'+
+            '<button class="tier-nav next" aria-label="Próxima opção">'+icon("arrow")+'</button>'+
+          '</div>'+
+        '</div>';
+      } else {
+        tiersHTML = '<div class="tiers">'+slides+'</div>';
+      }
+      body = '<ul class="pc-feats">'+feats+'</ul>'+tiersHTML;
     } else {
       body = '<ul class="pc-feats">'+feats+'</ul><div class="pc-price">'+priceHTML(p.price)+'</div>';
       foot = '<div class="pc-foot">'+ (soon
@@ -254,6 +271,26 @@
     renderChrome: renderChrome, renderGroups: renderGroups, renderHub: renderHub,
     renderProducts: renderProducts, renderBreadcrumb: renderBreadcrumb
   };
+
+  /* ---- carrossel de tiers (Elite -> Regular pela setinha) ---- */
+  function tierGo(car, idx){
+    var track = car.querySelector(".tier-track"); if(!track) return;
+    var n = track.children.length;
+    if(idx<0) idx=0; if(idx>n-1) idx=n-1;
+    car.setAttribute("data-index", idx);
+    track.style.transform = "translateX(-"+(idx*100)+"%)";
+    var prev = car.querySelector(".tier-nav.prev"), next = car.querySelector(".tier-nav.next");
+    if(prev) prev.disabled = (idx===0);
+    if(next) next.disabled = (idx===n-1);
+    car.querySelectorAll(".tier-dot").forEach(function(d,i){ d.classList.toggle("active", i===idx); });
+  }
+  document.addEventListener("click", function(e){
+    var t = e.target; if(!t || !t.closest) return;
+    var nav = t.closest(".tier-nav");
+    if(nav){ var car=nav.closest(".tier-carousel"); var idx=parseInt(car.getAttribute("data-index")||"0",10); tierGo(car, idx + (nav.classList.contains("next")?1:-1)); return; }
+    var dot = t.closest(".tier-dot");
+    if(dot){ tierGo(dot.closest(".tier-carousel"), parseInt(dot.getAttribute("data-go"),10)); }
+  });
 
   function fillIcons(){
     document.querySelectorAll("[data-ic]").forEach(function(n){ n.innerHTML = icon(n.getAttribute("data-ic")); });
