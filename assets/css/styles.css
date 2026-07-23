@@ -39,6 +39,7 @@
   /* Texto claro para o que fica DIRETO sobre o fundo escuro (chumbo→smoke) */
   --color-on-bg:          #EEF1F5;  /* títulos/textos claros sobre o fundo */
   --color-on-bg-muted:    #C2C8D0;  /* apoio/subtítulos sobre o fundo */
+  --color-primary-bright: #FF4D52;  /* vermelho vivo p/ texto da marca sobre o fundo escuro */
 
   /* Tipografia — Mona Sans (títulos, fonte da marca) + sistema no corpo */
   --font-sans: 'Mona Sans Variable', 'Mona Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -192,12 +193,12 @@ main { flex: 1 0 auto; }
 .hero { position: relative; padding-block: clamp(56px, 9vw, 110px); background: transparent; }
 .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
 .hero h1 { font-size: var(--text-5xl); font-weight: 800; color: var(--color-on-bg); }
-.hero h1 .grad { background: linear-gradient(120deg, var(--color-primary-dark), var(--color-accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero h1 .grad { background: linear-gradient(120deg, #FFFFFF, #C9CFD8); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .hero p.lead { font-size: var(--text-xl); color: var(--color-on-bg-muted); margin-top: 20px; max-width: 560px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
 .hero-trust { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 34px; }
 .hero-trust div { display: flex; flex-direction: column; }
-.hero-trust b { font-family: var(--font-sans); font-size: var(--text-2xl); color: var(--color-secondary); }
+.hero-trust b { font-family: var(--font-sans); font-size: var(--text-2xl); color: var(--color-primary-bright); }
 .hero-trust small { color: var(--color-on-bg-muted); font-size: var(--text-sm); }
 
 .hero-visual { position: relative; }
