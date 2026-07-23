@@ -116,11 +116,11 @@ window.SITE = {
       feats:["Revisão intensiva dos temas quentes","Simulados cronometrados","Foco em desempenho na prova","Acesso por tempo limitado"] },
 
     /* ===== RESIDENTES MEC — EXTENSIVOS ===== */
-    { id:"tea-trianual", group:"residentes-mec", track:"extensivo", name:"TEA Trianual", tagline:"Preparação TEA distribuída em 3 anos.", badge:{text:"Mais tempo de acesso",type:"primary"}, featured:true, price:null,
+    { id:"tea-trianual", group:"residentes-mec", track:"extensivo", duration:"trianual", name:"TEA Trianual", tagline:"Preparação TEA distribuída em 3 anos.", badge:{text:"Mais tempo de acesso",type:"primary"}, featured:true, price:null,
       feats:["Trilha TEA completa","3 anos de acesso","Banco de questões + simulados","Atualizações incluídas"] },
-    { id:"tea-bianual", group:"residentes-mec", track:"extensivo", name:"TEA Bianual", tagline:"Preparação TEA em 2 anos.", price:null,
+    { id:"tea-bianual", group:"residentes-mec", track:"extensivo", duration:"bianual", name:"TEA Bianual", tagline:"Preparação TEA em 2 anos.", price:null,
       feats:["Trilha TEA completa","2 anos de acesso","Banco de questões + simulados"] },
-    { id:"tea-anual", group:"residentes-mec", track:"extensivo", name:"TEA Anual", tagline:"Preparação TEA intensiva em 1 ano.", price:null,
+    { id:"tea-anual", group:"residentes-mec", track:"extensivo", duration:"anual", name:"TEA Anual", tagline:"Preparação TEA intensiva em 1 ano.", price:null,
       feats:["Trilha TEA completa","1 ano de acesso","Banco de questões + simulados"] },
 
     /* ===== RESIDENTES MEC — INTENSIVOS ===== */

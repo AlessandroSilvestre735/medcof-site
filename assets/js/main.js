@@ -264,14 +264,11 @@
     completao: { title:"ME Completão", tagline:"Do ME1 ao ME3 em um só plano, no ritmo da sua residência." },
     tsa:       { title:"TSA ME",       tagline:"Trilha TSA dentro do contexto ME." }
   };
-  var YEARS = [
-    { id:"r1", label:"R1", tag:"1º ano de residência", icon:"graduation", module:"ME1", durOrder:["trianual","bianual","anual"],
-      desc:"Início da trilha ME. Recomendamos o maior tempo de acesso para acompanhar toda a residência." },
-    { id:"r2", label:"R2", tag:"2º ano de residência", icon:"hospital", module:"ME2", durOrder:["bianual","anual"],
-      desc:"Continuidade da preparação, com foco no módulo ME2 e planos de 2 ou 1 ano." },
-    { id:"r3", label:"R3", tag:"3º ano de residência", icon:"star", module:"ME3", durOrder:["anual"],
-      desc:"Reta final da residência: foco no ME3 e no TSA, com plano anual." }
-  ];
+  var YEAR_META = {
+    r1: { label:"R1", tag:"1º ano de residência", icon:"graduation" },
+    r2: { label:"R2", tag:"2º ano de residência", icon:"hospital" },
+    r3: { label:"R3", tag:"3º ano de residência", icon:"star" }
+  };
 
   // Card de uma família (Completão / TSA) com carrossel de durações (setinha).
   function durationGroupCard(fam, list){
@@ -314,20 +311,63 @@
     '</article>';
   }
 
-  // Monta os cards de um ano de residência, na ordem: Completão, TSA, módulo ME.
-  function cardsForYear(all, yr){
-    function fam(name){ return all.filter(function(p){ return p.family===name; }); }
-    function byDurOrder(list){
-      return yr.durOrder.map(function(d){
-        return list.filter(function(p){ return p.duration===d; })[0];
-      }).filter(Boolean);
+  // Card único do "melhor curso" recomendado (usado no fluxo do Residente MEC).
+  function bestCourseCard(all, duration){
+    var best = all.filter(function(p){ return p.duration===duration; })[0];
+    if(!best) return "";
+    var rec = {}; for(var k in best){ rec[k] = best[k]; }
+    if(!rec.badge) rec.badge = { text:"Recomendado para você", type:"primary" };
+    return productCard(rec);
+  }
+
+  /* Fluxos por trilha: cada ano tem descrição, resumo e um build() que devolve os cards.
+     - Residentes SBA: Completão + TSA (com setinha de duração) + módulo ME (Regular/Elite).
+     - Residentes MEC: só o melhor curso TEA para o ano (R1→Trianual, R2→Bianual, R3→Anual). */
+  var YEAR_FLOWS = {
+    "residentes-sba": {
+      ask:  "Em qual ano da residência você está?",
+      help: "Escolha o seu ano para ver os cursos indicados para o seu momento.",
+      order: ["r1","r2","r3"],
+      years: {
+        r1: { desc:"Início da trilha ME. Recomendamos o maior tempo de acesso para acompanhar toda a residência.",
+              summary:"Completão · TSA · ME1", durOrder:["trianual","bianual","anual"], module:"r1" },
+        r2: { desc:"Continuidade da preparação, com foco no módulo ME2 e planos de 2 ou 1 ano.",
+              summary:"Completão · TSA · ME2", durOrder:["bianual","anual"], module:"r2" },
+        r3: { desc:"Reta final da residência: foco no ME3 e no TSA, com plano anual.",
+              summary:"Completão · TSA · ME3", durOrder:["anual"], module:"r3" }
+      },
+      build: function(all, y){
+        function fam(name){ return all.filter(function(p){ return p.family===name; }); }
+        function byDurOrder(list){
+          return y.durOrder.map(function(d){ return list.filter(function(p){ return p.duration===d; })[0]; }).filter(Boolean);
+        }
+        var out = "";
+        out += durationGroupCard("completao", byDurOrder(fam("completao")));
+        out += durationGroupCard("tsa", byDurOrder(fam("tsa")));
+        var mod = fam("modulo").filter(function(p){ return p.year===y.module; })[0];
+        if(mod) out += productCard(mod);
+        return out;
+      }
+    },
+    "residentes-mec": {
+      ask:  "Em qual ano da residência você está?",
+      help: "Vamos indicar o melhor plano de acesso TEA para o seu momento.",
+      order: ["r1","r2","r3"],
+      years: {
+        r1: { desc:"Início da residência: aproveite o maior tempo de acesso, com preparação distribuída em 3 anos.",
+              summary:"Melhor plano: TEA Trianual", best:"trianual" },
+        r2: { desc:"Metade da residência: o plano de 2 anos acompanha você até a prova.",
+              summary:"Melhor plano: TEA Bianual", best:"bianual" },
+        r3: { desc:"Reta final: preparação TEA concentrada em 1 ano.",
+              summary:"Melhor plano: TEA Anual", best:"anual" }
+      },
+      build: function(all, y){ return bestCourseCard(all, y.best); }
     }
-    var out = "";
-    out += durationGroupCard("completao", byDurOrder(fam("completao")));
-    out += durationGroupCard("tsa", byDurOrder(fam("tsa")));
-    var mod = fam("modulo").filter(function(p){ return p.year===yr.id; })[0];
-    if(mod) out += productCard(mod);
-    return out;
+  };
+
+  function buildYear(flow, all, id){
+    var y = flow.years[id]; if(!y) return "";
+    return flow.build(all, y);
   }
 
   function yearParam(){
@@ -336,32 +376,37 @@
 
   function renderProductsByYear(gid, track, sel){
     var box = document.querySelector(sel||"#products"); if(!box) return;
+    var flow = YEAR_FLOWS[gid];
     var all = productsOf(gid, track);
-    var years = YEARS.filter(function(yr){ return cardsForYear(all, yr).length; });
-    if(!years.length){ return fillProducts(box, all); }
+    if(!flow){ return fillProducts(box, all); }
+
+    var ids = flow.order.filter(function(id){ return buildYear(flow, all, id).length; });
+    if(!ids.length){ return fillProducts(box, all); }
 
     // Voltou da tela de carregamento com ?ano=rX -> mostra direto os cursos do ano.
     var pre = yearParam();
-    var chosen = pre && years.filter(function(y){ return y.id===pre; })[0];
+    var chosen = (pre && ids.indexOf(pre)>=0) ? pre : null;
     if(chosen){
-      box.innerHTML = cardsForYear(all, chosen);
+      var mc = YEAR_META[chosen];
+      box.innerHTML = buildYear(flow, all, chosen);
       var bar = el(''+
         '<div class="access-chooser"><div class="access-selected">'+
-          '<span>Mostrando cursos para <b>'+chosen.label+' — '+chosen.tag+'</b></span>'+
+          '<span>Mostrando cursos para <b>'+mc.label+' — '+mc.tag+'</b></span>'+
           '<a class="btn btn-outline" href="extensivos.html">Trocar ano</a>'+
         '</div></div>');
       box.parentNode.insertBefore(bar, box);
       return all.length;
     }
 
-    var opts = years.map(function(yr){
+    var opts = ids.map(function(id){
+      var m = YEAR_META[id], y = flow.years[id];
       return ''+
-      '<button type="button" class="access-opt" data-year="'+yr.id+'">'+
-        '<span class="card-ic">'+icon(yr.icon)+'</span>'+
-        '<span class="access-tag">'+yr.tag+'</span>'+
-        '<span class="access-title">'+yr.label+'</span>'+
-        '<span class="access-desc">'+yr.desc+'</span>'+
-        '<span class="access-count">Completão · TSA · '+yr.module+'</span>'+
+      '<button type="button" class="access-opt" data-year="'+id+'">'+
+        '<span class="card-ic">'+icon(m.icon)+'</span>'+
+        '<span class="access-tag">'+m.tag+'</span>'+
+        '<span class="access-title">'+m.label+'</span>'+
+        '<span class="access-desc">'+y.desc+'</span>'+
+        '<span class="access-count">'+y.summary+'</span>'+
         '<span class="access-go">Ver cursos '+icon("arrow")+'</span>'+
       '</button>';
     }).join("");
@@ -370,8 +415,8 @@
       '<div class="access-chooser">'+
         '<div class="access-ask reveal">'+
           '<span class="eyebrow">Passo 1 de 2</span>'+
-          '<h2 class="access-q">Em qual ano da residência você está?</h2>'+
-          '<p class="access-help">Escolha o seu ano para ver os cursos indicados para o seu momento.</p>'+
+          '<h2 class="access-q">'+flow.ask+'</h2>'+
+          '<p class="access-help">'+flow.help+'</p>'+
         '</div>'+
         '<div class="access-grid" data-stagger>'+opts+'</div>'+
       '</div>');
@@ -380,11 +425,12 @@
     box.hidden = true;
 
     function goYear(id){
-      var yr = YEARS.filter(function(y){ return y.id===id; })[0]; if(!yr) return;
-      var target = new URL("extensivos.html?ano="+yr.id, window.location.href).href;
+      if(ids.indexOf(id)<0) return;
+      var m = YEAR_META[id];
+      var target = new URL("extensivos.html?ano="+id, window.location.href).href;
       var loader = new URL(ROOT+"carregando.html", window.location.href).href;
       window.location.href = loader + "?to=" + encodeURIComponent(target) +
-        "&label=" + encodeURIComponent(yr.label + " · " + yr.tag);
+        "&label=" + encodeURIComponent(m.label + " · " + m.tag);
     }
 
     chooser.querySelectorAll(".access-opt").forEach(function(b){
