@@ -192,7 +192,11 @@ main { flex: 1 0 auto; }
    ---------------------------------------------------------------------------- */
 .hero { position: relative; padding-block: clamp(56px, 9vw, 110px); background: transparent; }
 .hero-grid { display: grid; grid-template-columns: 1fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
-.hero-grid > .reveal { max-width: 860px; }
+/* Hero sem card lateral: conteúdo centralizado e equilibrado */
+.hero-grid > .reveal { max-width: 800px; margin-inline: auto; text-align: center; }
+.hero p.lead { margin-inline: auto; }
+.hero-actions { justify-content: center; }
+.hero-trust { justify-content: center; gap: clamp(20px, 4vw, 44px); }
 .hero h1 { font-size: var(--text-5xl); font-weight: 800; color: var(--color-on-bg); }
 .hero h1 .grad { background: linear-gradient(120deg, #FFFFFF, #C9CFD8); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .hero p.lead { font-size: var(--text-xl); color: var(--color-on-bg-muted); margin-top: 20px; max-width: 560px; }
