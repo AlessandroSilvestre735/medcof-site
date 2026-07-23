@@ -232,9 +232,8 @@
       '<div class="pc-body">'+body+'</div>'+ foot +
     '</article>';
   }
-  function renderProducts(gid, track, sel){
-    var box = document.querySelector(sel||"#products"); if(!box) return;
-    var list = productsOf(gid, track);
+  function fillProducts(box, list){
+    if(!box) return 0;
     if(!list.length){
       box.innerHTML = '<div class="empty-state">'+icon("clock")+
         '<p><b>Em breve.</b> Estamos preparando os cursos desta trilha. '+
@@ -243,6 +242,155 @@
     }
     box.innerHTML = list.map(productCard).join("");
     return list.length;
+  }
+  function renderProducts(gid, track, sel){
+    var box = document.querySelector(sel||"#products"); if(!box) return;
+    return fillProducts(box, productsOf(gid, track));
+  }
+
+  /* ---- RENDER: seleção do ano de residência (R1/R2/R3) antes dos produtos ----
+     Regras (Residentes SBA · Extensivos):
+       - Pergunta R1/R2/R3. ME1=R1, ME2=R2, ME3=R3.
+       - Ordem dos cards: sempre Completão e TSA ANTES do módulo ME (Regular/Elite).
+       - Durações por ano (primeira = destaque; setinha vê as demais):
+           R1 → 3 anos, depois 2 e 1    R2 → 2 anos, depois 1    R3 → 1 ano
+  */
+  var DUR = {
+    trianual: { label:"Trianual", tag:"3 anos de acesso" },
+    bianual:  { label:"Bianual",  tag:"2 anos de acesso" },
+    anual:    { label:"Anual",    tag:"1 ano de acesso" }
+  };
+  var FAMILY = {
+    completao: { title:"ME Completão", tagline:"Do ME1 ao ME3 em um só plano, no ritmo da sua residência." },
+    tsa:       { title:"TSA ME",       tagline:"Trilha TSA dentro do contexto ME." }
+  };
+  var YEARS = [
+    { id:"r1", label:"R1", tag:"1º ano de residência", icon:"graduation", module:"ME1", durOrder:["trianual","bianual","anual"],
+      desc:"Início da trilha ME. Recomendamos o maior tempo de acesso para acompanhar toda a residência." },
+    { id:"r2", label:"R2", tag:"2º ano de residência", icon:"hospital", module:"ME2", durOrder:["bianual","anual"],
+      desc:"Continuidade da preparação, com foco no módulo ME2 e planos de 2 ou 1 ano." },
+    { id:"r3", label:"R3", tag:"3º ano de residência", icon:"star", module:"ME3", durOrder:["anual"],
+      desc:"Reta final da residência: foco no ME3 e no TSA, com plano anual." }
+  ];
+
+  // Card de uma família (Completão / TSA) com carrossel de durações (setinha).
+  function durationGroupCard(fam, list){
+    if(!list.length) return "";
+    var f = FAMILY[fam] || { title:fam, tagline:"" };
+    var slides = list.map(function(p){
+      var d = DUR[p.duration] || { label:p.duration, tag:"" };
+      var feats = (p.feats||[]).map(function(x){ return '<li>'+icon("check")+'<span>'+x+'</span></li>'; }).join("");
+      return ''+
+      '<div class="tier dur-slide">'+
+        '<div class="dur-head"><span class="dur-name">'+d.label+'</span>'+badgeHTML({text:d.tag,type:"primary"})+'</div>'+
+        '<ul class="pc-feats">'+feats+'</ul>'+
+        '<div class="dur-foot"><div class="dur-price">'+priceHTML(p.price)+'</div>'+
+          '<a class="btn btn-primary" href="'+ctaHref(p.name)+'">Quero me matricular '+icon("arrow")+'</a></div>'+
+      '</div>';
+    }).join("");
+
+    var carousel;
+    if(list.length>1){
+      var dots = list.map(function(p,i){ var d=DUR[p.duration]||{label:p.duration};
+        return '<button class="tier-dot'+(i===0?" active":"")+'" data-go="'+i+'" aria-label="Ver '+d.label+'"></button>'; }).join("");
+      carousel = ''+
+      '<div class="tier-carousel dur-carousel" data-index="0">'+
+        '<div class="tier-viewport"><div class="tier-track">'+slides+'</div></div>'+
+        '<div class="tier-controls">'+
+          '<button class="tier-nav prev" aria-label="Duração anterior" disabled>'+icon("arrow")+'</button>'+
+          '<div class="tier-dots">'+dots+'</div>'+
+          '<button class="tier-nav next" aria-label="Ver outras durações">'+icon("arrow")+'</button>'+
+        '</div>'+
+      '</div>';
+    } else {
+      carousel = '<div class="dur-single">'+slides+'</div>';
+    }
+
+    return ''+
+    '<article class="product-card featured">'+
+      '<div class="pc-head"><div class="pc-badges">'+badgeHTML(list[0].badge)+'</div>'+
+        '<h3>'+f.title+'</h3><p class="pc-tagline">'+f.tagline+'</p></div>'+
+      '<div class="pc-body">'+carousel+'</div>'+
+    '</article>';
+  }
+
+  // Monta os cards de um ano de residência, na ordem: Completão, TSA, módulo ME.
+  function cardsForYear(all, yr){
+    function fam(name){ return all.filter(function(p){ return p.family===name; }); }
+    function byDurOrder(list){
+      return yr.durOrder.map(function(d){
+        return list.filter(function(p){ return p.duration===d; })[0];
+      }).filter(Boolean);
+    }
+    var out = "";
+    out += durationGroupCard("completao", byDurOrder(fam("completao")));
+    out += durationGroupCard("tsa", byDurOrder(fam("tsa")));
+    var mod = fam("modulo").filter(function(p){ return p.year===yr.id; })[0];
+    if(mod) out += productCard(mod);
+    return out;
+  }
+
+  function renderProductsByYear(gid, track, sel){
+    var box = document.querySelector(sel||"#products"); if(!box) return;
+    var all = productsOf(gid, track);
+    var years = YEARS.filter(function(yr){ return cardsForYear(all, yr).length; });
+    if(!years.length){ return fillProducts(box, all); }
+
+    var opts = years.map(function(yr){
+      return ''+
+      '<button type="button" class="access-opt" data-year="'+yr.id+'">'+
+        '<span class="card-ic">'+icon(yr.icon)+'</span>'+
+        '<span class="access-tag">'+yr.tag+'</span>'+
+        '<span class="access-title">'+yr.label+'</span>'+
+        '<span class="access-desc">'+yr.desc+'</span>'+
+        '<span class="access-count">Completão · TSA · '+yr.module+'</span>'+
+        '<span class="access-go">Ver cursos '+icon("arrow")+'</span>'+
+      '</button>';
+    }).join("");
+
+    var chooser = el(''+
+      '<div class="access-chooser">'+
+        '<div class="access-ask reveal">'+
+          '<span class="eyebrow">Passo 1 de 2</span>'+
+          '<h2 class="access-q">Em qual ano da residência você está?</h2>'+
+          '<p class="access-help">Escolha o seu ano para ver os cursos indicados. Você pode trocar quando quiser.</p>'+
+        '</div>'+
+        '<div class="access-grid" data-stagger>'+opts+'</div>'+
+        '<div class="access-selected" hidden>'+
+          '<span>Mostrando cursos para <b class="access-sel-label"></b></span>'+
+          '<button type="button" class="btn btn-outline access-change">Trocar ano</button>'+
+        '</div>'+
+      '</div>');
+
+    box.parentNode.insertBefore(chooser, box);
+    box.hidden = true;
+
+    var ask = chooser.querySelector(".access-ask");
+    var grid = chooser.querySelector(".access-grid");
+    var selRow = chooser.querySelector(".access-selected");
+    var selLabel = chooser.querySelector(".access-sel-label");
+
+    function choose(id){
+      var yr = YEARS.filter(function(y){ return y.id===id; })[0]; if(!yr) return;
+      box.innerHTML = cardsForYear(all, yr);
+      box.hidden = false;
+      ask.hidden = true; grid.hidden = true;
+      selRow.hidden = false;
+      selLabel.textContent = yr.label + " — " + yr.tag;
+      box.scrollIntoView({behavior:"smooth", block:"start"});
+    }
+    function reopen(){
+      box.hidden = true;
+      ask.hidden = false; grid.hidden = false;
+      selRow.hidden = true;
+      chooser.scrollIntoView({behavior:"smooth", block:"start"});
+    }
+
+    grid.querySelectorAll(".access-opt").forEach(function(b){
+      b.addEventListener("click", function(){ choose(b.getAttribute("data-year")); });
+    });
+    chooser.querySelector(".access-change").addEventListener("click", reopen);
+    return all.length;
   }
 
   /* ---- RENDER: Funcionalidades da plataforma (card ativo alterna) ---- */
@@ -357,7 +505,7 @@
   window.MedCof = {
     icon: icon, link: link, groupById: groupById, productsOf: productsOf, pageOf: pageOf, ctaHref: ctaHref,
     renderChrome: renderChrome, renderGroups: renderGroups, renderHub: renderHub,
-    renderProducts: renderProducts, renderBreadcrumb: renderBreadcrumb,
+    renderProducts: renderProducts, renderProductsByYear: renderProductsByYear, renderBreadcrumb: renderBreadcrumb,
     renderFeatures: renderFeatures, renderProfessors: renderProfessors, renderPlano: renderPlano
   };
 

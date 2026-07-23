@@ -17,7 +17,7 @@
         <nav class="breadcrumb" id="breadcrumb" aria-label="Você está aqui"></nav>
         <span class="track-pill ext" data-ic-pre="layers">Curso Extensivo</span>
         <h1>Extensivos — Residentes SBA</h1>
-        <p>Base completa e progressiva para os módulos ME. Escolha o programa e a duração que cabem no seu tempo até a prova.</p>
+        <p>Base completa e progressiva para os módulos ME. Diga em que ano da residência você está (R1, R2 ou R3) e veja os cursos indicados para o seu momento.</p>
       </div>
     </header>
 
@@ -41,7 +41,7 @@
     var GID = "residentes-sba";
     MedCof.renderChrome(GID);
     MedCof.renderBreadcrumb([{label:"Início", href:"../index.html"}, {label:"Residentes SBA", href:"index.html"}, {label:"Extensivos"}]);
-    MedCof.renderProducts(GID, "extensivo", "#products");
+    MedCof.renderProductsByYear(GID, "extensivo", "#products");
     document.querySelectorAll("[data-ic]").forEach(function(n){ n.innerHTML = MedCof.icon(n.getAttribute("data-ic")); });
   </script>
 </body>

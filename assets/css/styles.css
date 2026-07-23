@@ -252,6 +252,46 @@ main { flex: 1 0 auto; }
 .path-card .feat svg { width: 20px; height: 20px; color: var(--color-accent); flex: none; }
 
 /* ----------------------------------------------------------------------------
+   7b. SELETOR DE TEMPO DE ACESSO (passo antes dos produtos)
+   ---------------------------------------------------------------------------- */
+.access-chooser { margin-bottom: clamp(28px, 4vw, 44px); }
+.access-ask { text-align: center; max-width: 640px; margin: 0 auto; }
+.access-q { font-size: var(--text-3xl); margin-top: 14px; color: var(--color-on-bg); }
+.access-help { color: var(--color-on-bg-muted); font-size: var(--text-lg); margin-top: 12px; }
+.access-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2vw, 22px); margin-top: 32px; }
+.access-opt {
+  position: relative; text-align: left; cursor: pointer; width: 100%;
+  display: flex; flex-direction: column; align-items: flex-start;
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg); padding: 28px;
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
+}
+.access-opt::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: linear-gradient(90deg, var(--color-primary), var(--color-secondary)); opacity: 0; transition: opacity .2s var(--ease); }
+.access-opt:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--color-primary); }
+.access-opt:hover::before { opacity: 1; }
+.access-tag { font-family: var(--font-sans); font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--color-primary-dark); background: var(--color-muted); padding: 4px 11px; border-radius: 999px; margin-bottom: 14px; }
+.access-title { font-family: var(--font-sans); font-weight: 800; font-size: var(--text-2xl); color: var(--color-on-bg); }
+.access-desc { color: var(--color-muted-fg); font-size: var(--text-sm); margin-top: 8px; flex: 1; }
+.access-count { font-family: var(--font-sans); font-weight: 600; font-size: var(--text-sm); color: var(--color-foreground); margin-top: 16px; }
+.access-go { display: inline-flex; align-items: center; gap: 7px; margin-top: 14px; font-family: var(--font-sans); font-weight: 700; color: var(--color-primary-dark); }
+.access-go svg { width: 17px; height: 17px; transition: transform .2s var(--ease); }
+.access-opt:hover .access-go svg { transform: translateX(4px); }
+.access-selected { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); padding: 14px 20px; }
+.access-selected span { color: var(--color-foreground); font-size: var(--text-lg); }
+.access-selected b { color: var(--color-primary-dark); }
+@media (max-width: 820px) { .access-grid { grid-template-columns: 1fr; } }
+
+/* Slides de duração dentro do card (Completão / TSA) — reaproveita o carrossel dos tiers */
+.dur-single { display: block; }
+.tier.dur-slide { display: block; grid-template-columns: none; padding: 0; border: none; background: transparent; }
+.dur-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.dur-name { font-family: var(--font-sans); font-weight: 800; font-size: var(--text-xl); color: var(--color-on-bg); }
+.dur-foot { margin-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.dur-foot .btn { padding: 9px 18px; min-height: 40px; white-space: nowrap; }
+.dur-price { display: flex; }
+@media (max-width: 480px) { .dur-foot .btn { width: 100%; } }
+
+/* ----------------------------------------------------------------------------
    8. CARDS DE PRODUTO
    ---------------------------------------------------------------------------- */
 .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: clamp(18px, 2.4vw, 26px); }
