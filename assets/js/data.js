@@ -170,5 +170,60 @@ window.SITE = {
       feats:["Ecocardiografia perioperatória","Interpretação e conduta","Lançamento em breve"] },
     { id:"medcof-hemo", group:"aperfeicoamento", track:"unico", name:"MedcofHEMO", tagline:"Hemodinâmica e monitorização avançada.", badge:{text:"Em breve",type:"soon"}, status:"em-breve", price:null,
       feats:["Monitorização hemodinâmica","Manejo do paciente crítico","Lançamento em breve"] }
-  ]
+  ],
+
+  /* --------------------------------------------------------------------------
+     FUNCIONALIDADES DA PLATAFORMA (seção de destaque na home)
+     -------------------------------------------------------------------------- */
+  features: [
+    { id:"cofbot", icon:"chat", title:"CofBot IA",
+      desc:"Seu assistente de estudo inteligente. Localize questões, encontre trechos exatos nas aulas e tire dúvidas em segundos. Menos tempo perdido, mais resultado e mais foco no que realmente importa." },
+    { id:"revisoes-nucleo", icon:"checklist", title:"Revisões Núcleo",
+      desc:"Revisões inteligentes nos temas mais cobrados. Conteúdo estratégico e personalizado que fixa o aprendizado e garante que nada escape na hora da prova, reforçando sua preparação todos os dias." },
+    { id:"questoes-comentadas", icon:"doc", title:"Questões Comentadas",
+      desc:"Cada questão vem acompanhada de comentários em texto e vídeo dos nossos especialistas. Entenda o raciocínio médico, aprenda com cada erro e transforme sua prática em conhecimento sólido." },
+    { id:"flashcards", icon:"cards", title:"FlashCards",
+      desc:"Flashcards interativos para memorizar conteúdos rapidamente. Estude em qualquer momento, revise conceitos-chave e fortaleça sua memória de longo prazo com metodologia de repetição espaçada." }
+  ],
+
+  /* --------------------------------------------------------------------------
+     COORDENADORES E PROFESSORES (carrossel na home)
+     Troque `initials` por `photo` quando tiver as fotos.
+     -------------------------------------------------------------------------- */
+  professors: [
+    { id:"lucas", name:"Dr. Lucas Rodrigues", role:"Coordenador e Professor MedCof Anest · TSA", initials:"LR",
+      credentials:[
+        "Graduação em Medicina pelo Centro Universitário Christus (CE)",
+        "Residência em Anestesiologia pelo Hospital Sírio-Libanês",
+        "Título Superior de Anestesiologia (TSA/SBA)",
+        "Preceptor e corresponsável de Residência Médica" ] },
+    { id:"alessandro", name:"Dr. Alessandro Silvestre", role:"Coordenador e Professor MedCof Anest · TEA", initials:"AS",
+      credentials:[
+        "Médico Anestesiologista pelo Hospital Alemão Oswaldo Cruz",
+        "Título de Especialista em Anestesiologia (TEA)",
+        "Ex-preceptor de residência médica do H. Sírio-Libanês",
+        "Diretor de Ensino e Inovação do grupo MAASP (São Paulo)" ] },
+    { id:"luan", name:"Dr. Luan Marinho", role:"Coordenador e Professor MedCof Anest · Geral", initials:"LM",
+      credentials:[
+        "Médico Anestesiologista pelo H. Sírio-Libanês",
+        "Pós-graduação em Dor pelo H. Sírio-Libanês",
+        "Observership em anestesia cardiotorácica e reanimação (H. S. Orsola — Itália)",
+        "Coordenador do Grupo MedCof" ] }
+  ],
+
+  /* --------------------------------------------------------------------------
+     PLANO TRIANUAL (card informativo na home)
+     -------------------------------------------------------------------------- */
+  planoTrianual: {
+    title: "Como funciona o acesso no R1 + R2 + R3 (Plano Trianual)",
+    paragraphs: [
+      "Ao escolher o Plano Trianual, o aluno garante 3 anos de acesso e acompanha sua preparação ao longo da residência com uma liberação organizada e progressiva dos conteúdos.",
+      "No plano, o aluno recebe os conteúdos de R1, R2 e R3, com liberação por quadrimestres seguindo o cronograma da SBA.",
+      "A proposta respeita a evolução do residente e a realidade da especialidade. A anestesia não é linear: muitas vezes, ainda no R1, o aluno já pode precisar revisar ou consultar temas mais avançados, inclusive de R3, dependendo da prática e da rotina do serviço."
+    ],
+    highlights: [
+      { icon:"check", title:"Vantagens", text:"Mantém o estudo organizado ao longo da formação, evita sobrecarga, acompanha a progressão da residência, permite contato com conteúdos mais avançados quando necessário e ainda trava o valor por 3 anos com todos os benefícios do plano Elite." },
+      { icon:"info", title:"Kit Elite (material físico)", text:"No plano trianual, o envio do kit ocorre somente no primeiro ano da compra; nos anos seguintes você mantém os demais benefícios Elite (acesso digital, revisões, IA etc.), sem novo envio do kit físico." }
+    ]
+  }
 };

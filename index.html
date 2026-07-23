@@ -67,6 +67,37 @@
       </div>
     </section>
 
+    <!-- FUNCIONALIDADES DA PLATAFORMA -->
+    <section class="section" id="funcionalidades">
+      <div class="container">
+        <div class="center reveal">
+          <span class="eyebrow">A plataforma</span>
+          <h2 class="section-title">Ferramentas que aceleram sua aprovação</h2>
+          <p class="section-sub">Tecnologia a favor do seu estudo: IA, revisões inteligentes, questões comentadas e flashcards — passe o mouse para explorar cada uma.</p>
+        </div>
+        <div class="feature-grid" id="features" style="margin-top:44px"></div>
+      </div>
+    </section>
+
+    <!-- COORDENADORES E PROFESSORES -->
+    <section class="section-tight" id="coordenadores">
+      <div class="container">
+        <div class="center reveal">
+          <span class="eyebrow">Quem ensina</span>
+          <h2 class="section-title">Coordenadores e <span class="accent">professores</span></h2>
+          <p class="section-sub">Profissionais experientes e titulados, dedicados à sua formação de excelência.</p>
+        </div>
+        <div class="prof-carousel" id="professors" style="margin-top:38px"></div>
+      </div>
+    </section>
+
+    <!-- PLANO TRIANUAL -->
+    <section class="section-tight" id="plano-trianual">
+      <div class="container">
+        <div class="reveal" id="plano"></div>
+      </div>
+    </section>
+
     <!-- CTA -->
     <section class="section">
       <div class="container">
@@ -86,6 +117,9 @@
   <script>
     MedCof.renderChrome(null);
     MedCof.renderGroups("#groups");
+    MedCof.renderFeatures("#features");
+    MedCof.renderProfessors("#professors");
+    MedCof.renderPlano("#plano");
     // preenche os ícones marcados com data-ic
     document.querySelectorAll("[data-ic]").forEach(function(n){ n.innerHTML = MedCof.icon(n.getAttribute("data-ic")); });
   </script>

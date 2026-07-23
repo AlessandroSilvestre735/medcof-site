@@ -24,7 +24,10 @@
     menu:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
     close:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
     clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
-    chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z"/></svg>'
+    chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z"/></svg>',
+    doc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>',
+    cards:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="13" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2"/></svg>',
+    shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>'
   };
   function icon(n){ return I[n] || I.star; }
 
@@ -242,6 +245,91 @@
     return list.length;
   }
 
+  /* ---- RENDER: Funcionalidades da plataforma (card ativo alterna) ---- */
+  function renderFeatures(sel){
+    var box = document.querySelector(sel||"#features"); if(!box || !S.features) return;
+    box.innerHTML = S.features.map(function(f){
+      return ''+
+      '<article class="feature-card" data-feat="'+f.id+'" tabindex="0" aria-current="false">'+
+        '<div class="feature-visual"><span class="feature-ic">'+icon(f.icon)+'</span></div>'+
+        '<div class="feature-body"><h3>'+f.title+'</h3><p>'+f.desc+'</p></div>'+
+      '</article>';
+    }).join("");
+    initFeatureAutoplay(box);
+  }
+  function initFeatureAutoplay(box){
+    var cards = Array.prototype.slice.call(box.querySelectorAll(".feature-card"));
+    if(!cards.length) return;
+    var idx = 0, timer = null;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function setActive(i){ idx=i; cards.forEach(function(c,j){ var on=j===i; c.classList.toggle("active", on); c.setAttribute("aria-current", on?"true":"false"); }); }
+    function next(){ setActive((idx+1)%cards.length); }
+    function play(){ if(reduce) return; stop(); timer=setInterval(next, 5000); }
+    function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+    setActive(0);
+    cards.forEach(function(c,i){
+      c.addEventListener("mouseenter", function(){ setActive(i); stop(); });
+      c.addEventListener("focusin", function(){ setActive(i); stop(); });
+      c.addEventListener("mouseleave", play);
+      c.addEventListener("focusout", play);
+    });
+    play();
+  }
+
+  /* ---- RENDER: Coordenadores e Professores (carrossel) ---- */
+  function renderProfessors(sel){
+    var box = document.querySelector(sel||"#professors"); if(!box || !S.professors) return;
+    var cards = S.professors.map(function(p){
+      var creds = (p.credentials||[]).map(function(c){ return '<li>'+c+'</li>'; }).join("");
+      var photo = p.photo ? '<img src="'+p.photo.src+'" alt="'+(p.photo.alt||p.name)+'">' : '<span class="prof-initials">'+(p.initials||"")+'</span>';
+      return ''+
+      '<article class="prof-card">'+
+        '<div class="prof-photo">'+photo+'</div>'+
+        '<h3 class="prof-name">'+p.name+'</h3>'+
+        '<p class="prof-role">'+p.role+'</p>'+
+        '<span class="prof-divider"></span>'+
+        '<ul class="prof-creds">'+creds+'</ul>'+
+      '</article>';
+    }).join("");
+    box.innerHTML = ''+
+      '<button class="prof-nav prev" aria-label="Professor anterior">'+icon("arrow")+'</button>'+
+      '<div class="prof-track" role="region" aria-roledescription="carrossel" aria-label="Coordenadores e professores">'+cards+'</div>'+
+      '<button class="prof-nav next" aria-label="Próximo professor">'+icon("arrow")+'</button>';
+    initProfCarousel(box);
+  }
+  function initProfCarousel(box){
+    var track = box.querySelector(".prof-track"); if(!track) return;
+    var prev = box.querySelector(".prof-nav.prev"), next = box.querySelector(".prof-nav.next");
+    function step(){ var c=track.querySelector(".prof-card"); return c ? Math.round(c.getBoundingClientRect().width)+22 : 320; }
+    function update(){
+      var max = track.scrollWidth - track.clientWidth - 2;
+      var noScroll = max <= 2;
+      [prev,next].forEach(function(b){ if(b) b.style.display = noScroll ? "none" : "grid"; });
+      if(prev) prev.disabled = track.scrollLeft <= 2;
+      if(next) next.disabled = track.scrollLeft >= max;
+    }
+    if(prev) prev.addEventListener("click", function(){ track.scrollBy({left:-step(), behavior:"smooth"}); });
+    if(next) next.addEventListener("click", function(){ track.scrollBy({left:step(), behavior:"smooth"}); });
+    track.addEventListener("scroll", update, {passive:true});
+    window.addEventListener("resize", update);
+    update();
+  }
+
+  /* ---- RENDER: card do Plano Trianual ---- */
+  function renderPlano(sel){
+    var box = document.querySelector(sel||"#plano"); if(!box || !S.planoTrianual) return;
+    var pl = S.planoTrianual;
+    var paras = (pl.paragraphs||[]).map(function(t){ return '<p class="plan-para">'+t+'</p>'; }).join("");
+    var highs = (pl.highlights||[]).map(function(h){
+      return '<div class="plan-highlight"><span class="plan-hl-ic">'+icon(h.icon)+'</span><div><b>'+h.title+'</b><p>'+h.text+'</p></div></div>';
+    }).join("");
+    box.innerHTML = ''+
+      '<div class="plan-card">'+
+        '<div class="plan-head"><span class="plan-shield">'+icon("shield")+'</span><h3>'+pl.title+'</h3></div>'+
+        '<div class="plan-body">'+paras+highs+'</div>'+
+      '</div>';
+  }
+
   /* ---- RENDER: breadcrumb ---- */
   function renderBreadcrumb(items){
     var box = document.querySelector("#breadcrumb"); if(!box) return;
@@ -269,7 +357,8 @@
   window.MedCof = {
     icon: icon, link: link, groupById: groupById, productsOf: productsOf, pageOf: pageOf, ctaHref: ctaHref,
     renderChrome: renderChrome, renderGroups: renderGroups, renderHub: renderHub,
-    renderProducts: renderProducts, renderBreadcrumb: renderBreadcrumb
+    renderProducts: renderProducts, renderBreadcrumb: renderBreadcrumb,
+    renderFeatures: renderFeatures, renderProfessors: renderProfessors, renderPlano: renderPlano
   };
 
   /* ---- carrossel de tiers (Elite -> Regular pela setinha) ---- */
