@@ -292,6 +292,46 @@ main { flex: 1 0 auto; }
 @media (max-width: 480px) { .dur-foot .btn { width: 100%; } }
 
 /* ----------------------------------------------------------------------------
+   7d. LANDING DE PRODUTO (produto.html)
+   ---------------------------------------------------------------------------- */
+.product-hero { border-bottom: none; }
+.product-hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(28px, 5vw, 56px); align-items: center; margin-top: 8px; }
+.product-hero h1 { font-size: var(--text-5xl); font-weight: 800; margin-top: 12px; }
+.product-hero .lead { font-size: var(--text-xl); color: var(--color-on-bg-muted); margin-top: 16px; max-width: 560px; }
+.product-hero .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+.product-hero-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 30px; box-shadow: var(--shadow-lg); }
+.product-hero-card h3 { font-size: var(--text-lg); margin-bottom: 16px; }
+.product-hero-card .pc-feats { gap: 12px; }
+.siblings { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.siblings-label { font-size: var(--text-sm); color: var(--color-on-bg-muted); font-weight: 600; }
+.chip-link { font-family: var(--font-sans); font-size: var(--text-sm); font-weight: 600; padding: 7px 14px; border-radius: 999px; background: var(--color-muted); color: var(--color-primary-darker); border: 1px solid var(--color-border); transition: border-color .2s var(--ease), background .2s var(--ease); }
+.chip-link:hover { border-color: var(--color-primary); background: var(--color-surface); }
+
+/* Planos na landing */
+.plans-wrap { margin-top: 30px; }
+.plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: clamp(16px, 2.4vw, 24px); max-width: 720px; margin-inline: auto; }
+.plan-opt { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 28px; }
+.plan-opt.elite { border-color: color-mix(in srgb, var(--color-gold) 45%, var(--color-border)); background: color-mix(in srgb, var(--color-gold-bg) 35%, var(--color-surface)); }
+.plan-opt-name { font-family: var(--font-sans); font-weight: 800; font-size: var(--text-xl); display: inline-flex; align-items: center; gap: 8px; }
+.plan-opt-price { margin-top: 4px; }
+.plan-opt-price .price-value { font-size: var(--text-2xl); }
+.plan-opt-note { color: var(--color-muted-fg); font-size: var(--text-sm); min-height: 1.2em; }
+.plan-opt .btn { margin-top: 14px; }
+.plan-single { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.plan-single-price .price-value { font-size: var(--text-3xl); }
+
+/* FAQ */
+.faq { max-width: 760px; margin: 28px auto 0; display: grid; gap: 12px; }
+.faq-item { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); overflow: hidden; }
+.faq-item summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; font-family: var(--font-sans); font-weight: 600; color: var(--color-on-bg); }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-plus { color: var(--color-primary-dark); display: inline-flex; transition: transform .2s var(--ease); }
+.faq-plus svg { width: 18px; height: 18px; transform: rotate(90deg); }
+.faq-item[open] .faq-plus { transform: rotate(90deg); }
+.faq-a { padding: 0 20px 20px; color: var(--color-muted-fg); font-size: var(--text-sm); line-height: 1.65; }
+@media (max-width: 820px) { .product-hero-grid { grid-template-columns: 1fr; } }
+
+/* ----------------------------------------------------------------------------
    7c. TELA DE CARREGAMENTO (carregando.html)
    ---------------------------------------------------------------------------- */
 .loading-screen { min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 32px; background: var(--color-background); }

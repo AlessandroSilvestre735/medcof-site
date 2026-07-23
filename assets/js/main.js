@@ -36,6 +36,9 @@
   function link(path){ return ROOT + path; }
   function groupById(id){ return S.groups.filter(function(g){return g.id===id;})[0]; }
   function productsOf(gid, track){ return S.products.filter(function(p){ return p.group===gid && (!track || p.track===track); }); }
+  function productById(id){ return S.products.filter(function(p){ return p.id===id; })[0]; }
+  function getParam(name){ try { return new URLSearchParams(window.location.search).get(name); } catch(e){ return null; } }
+  function productHref(id){ return link("produto.html") + "?id=" + encodeURIComponent(id); }
   function pageOf(gid, track){ // caminho relativo para a landing de um grupo/track
     if(track==="extensivo") return link(gid+"/extensivos.html");
     if(track==="intensivo") return link(gid+"/intensivos.html");
@@ -201,7 +204,7 @@
           '<span class="tier-name">'+t.name+(t.elite?badgeHTML({text:"Elite",type:"elite"}):"")+'</span>'+
           '<div class="tier-price">'+priceHTML(t.price,true)+'</div>'+
           '<small class="tier-note">'+(t.note||"")+'</small>'+
-          '<a class="btn btn-primary" href="'+ctaHref(p.name,t.name)+'">Matricular</a>'+
+          '<a class="btn btn-primary" href="'+productHref(p.id)+'">Conhecer o curso</a>'+
         '</div>';
       }).join("");
       var tiersHTML;
@@ -223,8 +226,8 @@
     } else {
       body = '<ul class="pc-feats">'+feats+'</ul><div class="pc-price">'+priceHTML(p.price)+'</div>';
       foot = '<div class="pc-foot">'+ (soon
-        ? '<a class="btn btn-ghost btn-block" href="'+ctaHref(p.name,"Aviso de lançamento")+'">'+icon("clock")+'Avise-me quando lançar</a>'
-        : '<a class="btn btn-primary btn-block" href="'+ctaHref(p.name)+'">Quero me matricular '+icon("arrow")+'</a>') +'</div>';
+        ? '<a class="btn btn-ghost btn-block stretched-link" href="'+productHref(p.id)+'">'+icon("clock")+'Ver detalhes</a>'
+        : '<a class="btn btn-primary btn-block stretched-link" href="'+productHref(p.id)+'">Conhecer o curso '+icon("arrow")+'</a>') +'</div>';
     }
     return ''+
     '<article class="product-card'+(p.featured?" featured":"")+(soon?" coming":"")+'">'+
@@ -283,7 +286,7 @@
         '<div class="dur-head"><span class="dur-name">'+d.label+'</span>'+badgeHTML({text:d.tag,type:"primary"})+'</div>'+
         '<ul class="pc-feats">'+feats+'</ul>'+
         '<div class="dur-foot"><div class="dur-price">'+priceHTML(p.price)+'</div>'+
-          '<a class="btn btn-primary" href="'+ctaHref(p.name)+'">Quero me matricular '+icon("arrow")+'</a></div>'+
+          '<a class="btn btn-primary" href="'+productHref(p.id)+'">Conhecer o curso '+icon("arrow")+'</a></div>'+
       '</div>';
     }).join("");
 
@@ -364,9 +367,7 @@
     return flow.build(all, y);
   }
 
-  function yearParam(){
-    try { return new URLSearchParams(window.location.search).get("ano"); } catch(e){ return null; }
-  }
+  function yearParam(){ return getParam("ano"); }
 
   function renderProductsByYear(gid, track, sel){
     var box = document.querySelector(sel||"#products"); if(!box) return;
@@ -431,6 +432,150 @@
       b.addEventListener("click", function(){ goYear(b.getAttribute("data-year")); });
     });
     return all.length;
+  }
+
+  /* ---- RENDER: landing page individual do produto (produto.html?id=...) ---- */
+  var TRACK_INFO = {
+    extensivo:      { label:"Curso Extensivo", cls:"ext", page:"extensivos.html" },
+    intensivo:      { label:"Curso Intensivo", cls:"int", page:"intensivos.html" },
+    "segunda-fase": { label:"Segunda Fase",    cls:"sf",  page:"segunda-fase.html" },
+    unico:          { label:"Curso",           cls:"ext", page:"index.html" }
+  };
+
+  function productFaq(p){
+    var acesso = "";
+    (p.feats||[]).forEach(function(f){ if(!acesso && /ano|acesso/i.test(f)) acesso = f; });
+    return [
+      { q:"Como recebo o acesso?", a:"Assim que a matrícula é confirmada, o acesso à plataforma é liberado e você já pode começar a estudar, no computador ou no celular." },
+      { q:"Por quanto tempo o curso fica disponível?", a: acesso
+          ? ("Este curso oferece "+acesso.toLowerCase()+". Você acompanha o conteúdo no seu ritmo dentro desse período.")
+          : "O período de acesso é informado na descrição do curso e liberado conforme o cronograma." },
+      { q:"Como tiro dúvidas durante o curso?", a:"Você conta com o CofBot (IA de estudo) para localizar questões e trechos das aulas, além das revisões inteligentes e do suporte da equipe MedCof." },
+      { q:"Ainda tenho dúvidas. Com quem falo?", a:"Fale com a nossa equipe pela página de contato — ajudamos você a escolher o melhor plano para o seu momento." }
+    ];
+  }
+
+  function renderProductPage(sel){
+    var mount = document.querySelector(sel||"#produto"); if(!mount) return;
+    var id = getParam("id");
+    var p = id && productById(id);
+    if(!p){
+      renderChrome(null);
+      mount.innerHTML = '<section class="section"><div class="container"><div class="empty-state">'+icon("info")+
+        '<p><b>Curso não encontrado.</b> O link pode estar incorreto ou desatualizado. '+
+        '<a href="'+link("index.html")+'">Voltar para a página inicial</a> e escolher sua trilha.</p></div></div></section>';
+      return;
+    }
+    var g = groupById(p.group) || { label:"MedCof", id:null };
+    var t = TRACK_INFO[p.track] || TRACK_INFO.unico;
+    var soon = p.status==="em-breve";
+    var listPage = g.id ? link(g.id+"/"+t.page) : link("index.html");
+
+    renderChrome(g.id);
+    document.title = p.name + " — " + g.label + " | MedCof";
+
+    var crumbs = ''+
+      '<a href="'+link("index.html")+'">Início</a><span class="sep">'+icon("arrow")+'</span>'+
+      '<a href="'+pageOf(g.id)+'">'+g.label+'</a><span class="sep">'+icon("arrow")+'</span>'+
+      '<a href="'+listPage+'">'+t.label+'</a><span class="sep">'+icon("arrow")+'</span>'+
+      '<b>'+p.name+'</b>';
+
+    var feats = (p.feats||[]).map(function(f){ return '<li>'+icon("check")+'<span>'+f+'</span></li>'; }).join("");
+
+    // Planos / preço
+    var plansHTML;
+    if(p.tiers){
+      var ordered = p.tiers.slice().sort(function(a,b){ return (b.elite?1:0)-(a.elite?1:0); });
+      plansHTML = '<div class="plans-grid">'+ ordered.map(function(tr){
+        return ''+
+        '<div class="plan-opt'+(tr.elite?" elite":"")+'">'+
+          '<span class="plan-opt-name">'+tr.name+(tr.elite?badgeHTML({text:"Elite",type:"elite"}):"")+'</span>'+
+          '<div class="plan-opt-price">'+priceHTML(tr.price,true)+'</div>'+
+          '<small class="plan-opt-note">'+(tr.note||"")+'</small>'+
+          '<a class="btn btn-primary btn-block" href="'+ctaHref(p.name,tr.name)+'">Matricular · '+tr.name+'</a>'+
+        '</div>';
+      }).join("") + '</div>';
+    } else {
+      plansHTML = '<div class="plan-single">'+
+        '<div class="plan-single-price">'+priceHTML(p.price)+'</div>'+
+        (soon
+          ? '<a class="btn btn-ghost btn-lg" href="'+ctaHref(p.name,"Aviso de lançamento")+'">'+icon("clock")+' Avise-me quando lançar</a>'
+          : '<a class="btn btn-primary btn-lg" href="'+ctaHref(p.name)+'">Quero me matricular '+icon("arrow")+'</a>')+
+      '</div>';
+    }
+
+    // Outras durações da mesma família
+    var siblingsHTML = "";
+    if(p.family && p.duration){
+      var sibs = S.products.filter(function(x){ return x.group===p.group && x.family===p.family && x.id!==p.id; });
+      if(sibs.length){
+        siblingsHTML = '<div class="siblings"><span class="siblings-label">Outras durações:</span>'+
+          sibs.map(function(x){ return '<a class="chip-link" href="'+productHref(x.id)+'">'+x.name+'</a>'; }).join("")+'</div>';
+      }
+    }
+
+    var faqHTML = productFaq(p).map(function(it){
+      return '<details class="faq-item"><summary>'+it.q+'<span class="faq-plus">'+icon("arrow")+'</span></summary><div class="faq-a">'+it.a+'</div></details>';
+    }).join("");
+
+    var mainCta = soon ? ctaHref(p.name,"Aviso de lançamento") : ctaHref(p.name);
+    var mainLabel = soon ? "Avise-me quando lançar" : "Quero me matricular";
+
+    mount.innerHTML = ''+
+    '<header class="page-head product-hero">'+
+      '<div class="container">'+
+        '<nav class="breadcrumb">'+crumbs+'</nav>'+
+        '<div class="product-hero-grid">'+
+          '<div class="reveal">'+
+            '<span class="track-pill '+t.cls+'">'+t.label+'</span>'+
+            (p.badge?'<div class="pc-badges" style="margin:10px 0">'+badgeHTML(p.badge)+'</div>':'')+
+            '<h1>'+p.name+'</h1>'+
+            '<p class="lead">'+p.tagline+'</p>'+
+            '<div class="hero-actions">'+
+              '<a class="btn btn-primary btn-lg" href="'+mainCta+'">'+mainLabel+' '+icon("arrow")+'</a>'+
+              '<a class="btn btn-outline btn-lg" href="'+listPage+'">Ver outras opções</a>'+
+            '</div>'+
+            siblingsHTML+
+          '</div>'+
+          '<aside class="product-hero-card reveal">'+
+            '<h3>O que está incluído</h3>'+
+            '<ul class="pc-feats">'+feats+'</ul>'+
+          '</aside>'+
+        '</div>'+
+      '</div>'+
+    '</header>'+
+    '<section class="section-tight" id="planos"><div class="container">'+
+      '<div class="center reveal"><span class="eyebrow">Matrícula</span>'+
+      '<h2 class="section-title">'+(p.tiers?"Escolha o seu plano":"Garanta a sua vaga")+'</h2>'+
+      '<p class="section-sub">'+(p.tiers?"Compare as versões e comece agora mesmo.":"Matricule-se e comece a estudar hoje.")+'</p></div>'+
+      '<div class="plans-wrap">'+plansHTML+'</div>'+
+    '</div></section>'+
+    '<section class="section-tight"><div class="container">'+
+      '<div class="center reveal"><span class="eyebrow">A plataforma</span>'+
+      '<h2 class="section-title">A metodologia MedCof</h2>'+
+      '<p class="section-sub">Tecnologia a favor do seu estudo: IA, revisões inteligentes, questões comentadas e flashcards.</p></div>'+
+      '<div class="feature-grid" id="features" style="margin-top:40px"></div>'+
+    '</div></section>'+
+    '<section class="section-tight"><div class="container">'+
+      '<div class="center reveal"><span class="eyebrow">Quem ensina</span>'+
+      '<h2 class="section-title">Coordenadores e <span class="accent">professores</span></h2></div>'+
+      '<div class="prof-carousel" id="professors" style="margin-top:34px"></div>'+
+    '</div></section>'+
+    '<section class="section-tight"><div class="container">'+
+      '<div class="center reveal"><span class="eyebrow">Dúvidas</span>'+
+      '<h2 class="section-title">Perguntas frequentes</h2></div>'+
+      '<div class="faq reveal">'+faqHTML+'</div>'+
+    '</div></section>'+
+    '<section class="section"><div class="container"><div class="cta-band reveal">'+
+      '<h2>Pronto para dar o próximo passo?</h2>'+
+      '<p>'+p.tagline+'</p>'+
+      '<a class="btn btn-primary btn-lg" href="'+mainCta+'">'+mainLabel+'</a>'+
+    '</div></div></section>';
+
+    renderFeatures("#features");
+    renderProfessors("#professors");
+    fillIcons();
+    initReveal();
   }
 
   /* ---- RENDER: Funcionalidades da plataforma (card ativo alterna) ---- */
@@ -545,7 +690,7 @@
   window.MedCof = {
     icon: icon, link: link, groupById: groupById, productsOf: productsOf, pageOf: pageOf, ctaHref: ctaHref,
     renderChrome: renderChrome, renderGroups: renderGroups, renderHub: renderHub,
-    renderProducts: renderProducts, renderProductsByYear: renderProductsByYear, renderBreadcrumb: renderBreadcrumb,
+    renderProducts: renderProducts, renderProductsByYear: renderProductsByYear, renderProductPage: renderProductPage, productHref: productHref, renderBreadcrumb: renderBreadcrumb,
     renderFeatures: renderFeatures, renderProfessors: renderProfessors, renderPlano: renderPlano
   };
 
