@@ -26,7 +26,7 @@ window.SITE = {
       tagline: "Preparação para a prova de acesso — Módulos ME",
       desc: "Trilha completa para residentes vinculados à SBA. Do ME1 ao ME3 e Completão, no seu ritmo.",
       tags: ["ME1 · ME2 · ME3", "Completão", "TSA ME"],
-      tracks: ["extensivo", "intensivo", "segunda-fase"]
+      tracks: ["extensivo", "intensivo"]
     },
     {
       id: "residentes-mec",
@@ -114,10 +114,6 @@ window.SITE = {
     /* ===== RESIDENTES SBA — INTENSIVOS ===== */
     { id:"hiit-me", group:"residentes-sba", track:"intensivo", name:"HIIT ME", tagline:"Reta final de alta intensidade para a prova ME.", badge:{text:"Reta final",type:"hot"}, featured:true, price:null,
       feats:["Revisão intensiva dos temas quentes","Simulados cronometrados","Foco em desempenho na prova","Acesso por tempo limitado"] },
-
-    /* ===== RESIDENTES SBA — SEGUNDA FASE (TSA) ===== */
-    { id:"segunda-fase-tsa-sba", group:"residentes-sba", track:"segunda-fase", name:"Segunda Fase TSA", tagline:"Treino dedicado para a 2ª fase do TSA.", price:null,
-      feats:["Simulações da prova prática/oral","Casos clínicos comentados","Treino de argumentação e conduta"] },
 
     /* ===== RESIDENTES MEC — EXTENSIVOS ===== */
     { id:"tea-trianual", group:"residentes-mec", track:"extensivo", name:"TEA Trianual", tagline:"Preparação TEA distribuída em 3 anos.", badge:{text:"Mais tempo de acesso",type:"primary"}, featured:true, price:null,
