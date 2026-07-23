@@ -262,7 +262,8 @@
   };
   var FAMILY = {
     completao: { title:"ME Completão", tagline:"Do ME1 ao ME3 em um só plano, no ritmo da sua residência." },
-    tsa:       { title:"TSA ME",       tagline:"Trilha TSA dentro do contexto ME." }
+    tsa:       { title:"TSA ME",       tagline:"Trilha TSA dentro do contexto ME." },
+    tea:       { title:"TEA",          tagline:"Preparação completa para o TEA, no ritmo da sua residência." }
   };
   var YEAR_META = {
     r1: { label:"R1", tag:"1º ano de residência", icon:"graduation" },
@@ -311,18 +312,15 @@
     '</article>';
   }
 
-  // Card único do "melhor curso" recomendado (usado no fluxo do Residente MEC).
-  function bestCourseCard(all, duration){
-    var best = all.filter(function(p){ return p.duration===duration; })[0];
-    if(!best) return "";
-    var rec = {}; for(var k in best){ rec[k] = best[k]; }
-    if(!rec.badge) rec.badge = { text:"Recomendado para você", type:"primary" };
-    return productCard(rec);
+  // Seleciona os produtos de uma família na ordem de durações do ano (melhor primeiro).
+  function famByDurOrder(all, family, durOrder){
+    var list = all.filter(function(p){ return p.family===family; });
+    return durOrder.map(function(d){ return list.filter(function(p){ return p.duration===d; })[0]; }).filter(Boolean);
   }
 
   /* Fluxos por trilha: cada ano tem descrição, resumo e um build() que devolve os cards.
      - Residentes SBA: Completão + TSA (com setinha de duração) + módulo ME (Regular/Elite).
-     - Residentes MEC: só o melhor curso TEA para o ano (R1→Trianual, R2→Bianual, R3→Anual). */
+     - Residentes MEC: TEA com setinha de duração (melhor primeiro; setinha vê as demais). */
   var YEAR_FLOWS = {
     "residentes-sba": {
       ask:  "Em qual ano da residência você está?",
@@ -337,31 +335,27 @@
               summary:"Completão · TSA · ME3", durOrder:["anual"], module:"r3" }
       },
       build: function(all, y){
-        function fam(name){ return all.filter(function(p){ return p.family===name; }); }
-        function byDurOrder(list){
-          return y.durOrder.map(function(d){ return list.filter(function(p){ return p.duration===d; })[0]; }).filter(Boolean);
-        }
         var out = "";
-        out += durationGroupCard("completao", byDurOrder(fam("completao")));
-        out += durationGroupCard("tsa", byDurOrder(fam("tsa")));
-        var mod = fam("modulo").filter(function(p){ return p.year===y.module; })[0];
+        out += durationGroupCard("completao", famByDurOrder(all, "completao", y.durOrder));
+        out += durationGroupCard("tsa", famByDurOrder(all, "tsa", y.durOrder));
+        var mod = all.filter(function(p){ return p.family==="modulo" && p.year===y.module; })[0];
         if(mod) out += productCard(mod);
         return out;
       }
     },
     "residentes-mec": {
       ask:  "Em qual ano da residência você está?",
-      help: "Vamos indicar o melhor plano de acesso TEA para o seu momento.",
+      help: "Escolha o seu ano para ver os planos TEA indicados, do maior ao menor tempo de acesso.",
       order: ["r1","r2","r3"],
       years: {
         r1: { desc:"Início da residência: aproveite o maior tempo de acesso, com preparação distribuída em 3 anos.",
-              summary:"Melhor plano: TEA Trianual", best:"trianual" },
-        r2: { desc:"Metade da residência: o plano de 2 anos acompanha você até a prova.",
-              summary:"Melhor plano: TEA Bianual", best:"bianual" },
+              summary:"TEA — Trianual, Bianual ou Anual", durOrder:["trianual","bianual","anual"] },
+        r2: { desc:"Metade da residência: planos de 2 ou 1 ano acompanham você até a prova.",
+              summary:"TEA — Bianual ou Anual", durOrder:["bianual","anual"] },
         r3: { desc:"Reta final: preparação TEA concentrada em 1 ano.",
-              summary:"Melhor plano: TEA Anual", best:"anual" }
+              summary:"TEA — Anual", durOrder:["anual"] }
       },
-      build: function(all, y){ return bestCourseCard(all, y.best); }
+      build: function(all, y){ return durationGroupCard("tea", famByDurOrder(all, "tea", y.durOrder)); }
     }
   };
 
