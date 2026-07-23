@@ -36,6 +36,7 @@
   function pageOf(gid, track){ // caminho relativo para a landing de um grupo/track
     if(track==="extensivo") return link(gid+"/extensivos.html");
     if(track==="intensivo") return link(gid+"/intensivos.html");
+    if(track==="segunda-fase") return link(gid+"/segunda-fase.html");
     return link(gid+"/index.html");
   }
   function ctaHref(name, tier){
@@ -144,25 +145,30 @@
   function renderHub(gid){
     var box = document.querySelector("#hub"); if(!box) return;
     var cfg = {
-      extensivo: { icon:"layers", title:"Cursos Extensivos", desc:"Preparação completa e aprofundada, distribuída ao longo do ano (ou de vários anos). Ideal para construir base sólida com tempo.",
+      extensivo: { icon:"layers", pill:"Extensivo", cls:"ext", title:"Cursos Extensivos", desc:"Preparação completa e aprofundada, distribuída ao longo do ano (ou de vários anos). Ideal para construir base sólida com tempo.",
         feats:["Conteúdo completo e progressivo","Maior tempo de acesso","Banco de questões + simulados"] },
-      intensivo: { icon:"bolt", title:"Cursos Intensivos", desc:"Revisão de alta intensidade para a reta final. Foco em desempenho, simulados e temas mais cobrados.",
-        feats:["Revisão focada na reta final","Simulados cronometrados","Alto rendimento em pouco tempo"] }
+      intensivo: { icon:"bolt", pill:"Intensivo", cls:"int", title:"Cursos Intensivos", desc:"Revisão de alta intensidade para a reta final. Foco em desempenho, simulados e temas mais cobrados.",
+        feats:["Revisão focada na reta final","Simulados cronometrados","Alto rendimento em pouco tempo"] },
+      "segunda-fase": { icon:"checklist", pill:"Segunda Fase", cls:"sf", title:"Segunda Fase", cta:"Quero me preparar para segunda fase",
+        desc:"Preparação dedicada à 2ª fase (prova prática/oral): simulações realistas, casos clínicos e treino de argumentação e conduta.",
+        feats:["Simulações da prova prática/oral","Casos clínicos comentados","Treino de argumentação"] }
     };
     var g = groupById(gid);
     box.setAttribute("data-stagger","");
     box.innerHTML = (g.tracks||[]).filter(function(t){return t!=="unico";}).map(function(t){
-      var c = cfg[t]; var count = productsOf(gid,t).length;
+      var c = cfg[t]; if(!c) return "";
+      var count = productsOf(gid,t).length;
       var feats = c.feats.map(function(f){return '<li>'+icon("check")+'<span>'+f+'</span></li>';}).join("");
+      var cta = c.cta ? c.cta : (count>0 ? ("Ver "+count+" curso"+(count>1?"s":"")) : "Em breve");
       return ''+
       '<article class="path-card">'+
         '<div class="card-ic">'+icon(c.icon)+'</div>'+
-        '<span class="track-pill '+(t==="extensivo"?"ext":"int")+'">'+(t==="extensivo"?"Extensivo":"Intensivo")+'</span>'+
+        '<span class="track-pill '+c.cls+'">'+c.pill+'</span>'+
         '<h3>'+c.title+'</h3>'+
         '<p style="color:var(--color-muted-fg);margin-top:8px">'+c.desc+'</p>'+
         '<ul class="feat">'+feats+'</ul>'+
         '<div style="margin-top:24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">'+
-          '<a class="btn btn-secondary stretched-link" href="'+pageOf(gid,t)+'">Ver '+count+' curso'+(count>1?"s":"")+' '+icon("arrow")+'</a>'+
+          '<a class="btn btn-secondary stretched-link" href="'+pageOf(gid,t)+'">'+cta+' '+icon("arrow")+'</a>'+
         '</div>'+
       '</article>';
     }).join("");
@@ -209,6 +215,12 @@
   function renderProducts(gid, track, sel){
     var box = document.querySelector(sel||"#products"); if(!box) return;
     var list = productsOf(gid, track);
+    if(!list.length){
+      box.innerHTML = '<div class="empty-state">'+icon("clock")+
+        '<p><b>Em breve.</b> Estamos preparando os cursos desta trilha. '+
+        'Enquanto isso, <a href="'+link("matricula.html")+'">fale com a equipe MedCof</a> para saber das novidades.</p></div>';
+      return 0;
+    }
     box.innerHTML = list.map(productCard).join("");
     return list.length;
   }

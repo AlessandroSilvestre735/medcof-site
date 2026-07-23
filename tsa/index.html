@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TSA — Título Superior em Anestesiologia | MedCof</title>
-  <meta name="description" content="Preparação para o TSA nas versões Regular e Elite. Conteúdo avançado para o Título Superior em Anestesiologia." />
+  <meta name="description" content="Preparação para o TSA: cursos extensivos (Regular e Elite), intensivo de reta final e segunda fase (prova prática/oral)." />
   <link rel="stylesheet" href="../assets/css/styles.css" />
 </head>
 <body>
@@ -15,24 +15,28 @@
     <header class="page-head">
       <div class="container">
         <nav class="breadcrumb" id="breadcrumb" aria-label="Você está aqui"></nav>
-        <span class="track-pill ext" data-ic-pre="star">Curso Extensivo</span>
-        <h1>TSA — Título Superior</h1>
-        <p>Preparação avançada para o Título Superior em Anestesiologia. Escolha entre as versões Regular e Elite conforme o nível de acompanhamento.</p>
+        <span class="eyebrow" data-ic-pre="star">TSA</span>
+        <h1>TSA — Título Superior em Anestesiologia</h1>
+        <p>Escolha como você quer se preparar para o TSA: uma base completa ao longo do ano, a revisão intensiva de reta final ou a preparação dedicada para a segunda fase.</p>
       </div>
     </header>
 
     <section class="section">
       <div class="container">
-        <div class="product-grid" id="products"></div>
+        <div class="grid grid-3" id="hub"></div>
+        <div class="compare-note">
+          <span data-ic="info"></span>
+          <p><b>Como funciona:</b> cada caminho fica em uma página própria — base sólida (<b>extensivo</b>, Regular ou Elite), reta final de alto rendimento (<b>intensivo</b>) ou preparação dedicada à <b>segunda fase</b> (prova prática/oral) do TSA.</p>
+        </div>
       </div>
     </section>
 
     <section class="section-tight">
       <div class="container">
         <div class="cta-band reveal">
-          <h2>Buscando também a segunda fase do TSA?</h2>
-          <p>Temos um curso dedicado à prova prática/oral do TSA, com simulações e treino de argumentação.</p>
-          <a class="btn btn-primary btn-lg" href="../segunda-fase/index.html">Ver Segunda Fase</a>
+          <h2>Regular ou Elite? Fale com quem entende</h2>
+          <p>A equipe MedCof te ajuda a escolher a versão ideal do TSA para o seu momento.</p>
+          <a class="btn btn-primary btn-lg" href="../matricula.html?produto=TSA">Falar com a equipe</a>
         </div>
       </div>
     </section>
@@ -47,7 +51,8 @@
     var GID = "tsa";
     MedCof.renderChrome(GID);
     MedCof.renderBreadcrumb([{label:"Início", href:"../index.html"}, {label:"TSA"}]);
-    MedCof.renderProducts(GID, "extensivo", "#products");
+    MedCof.renderHub(GID);
+    document.querySelectorAll("[data-ic]").forEach(function(n){ n.innerHTML = MedCof.icon(n.getAttribute("data-ic")); });
   </script>
 </body>
 </html>

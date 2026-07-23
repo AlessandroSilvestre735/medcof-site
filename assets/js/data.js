@@ -26,7 +26,7 @@ window.SITE = {
       tagline: "Preparação para a prova de acesso — Módulos ME",
       desc: "Trilha completa para residentes vinculados à SBA. Do ME1 ao ME3 e Completão, no seu ritmo.",
       tags: ["ME1 · ME2 · ME3", "Completão", "TSA ME"],
-      tracks: ["extensivo", "intensivo"]
+      tracks: ["extensivo", "intensivo", "segunda-fase"]
     },
     {
       id: "residentes-mec",
@@ -36,7 +36,7 @@ window.SITE = {
       tagline: "Trilha TEA para residentes MEC",
       desc: "Para residentes de programas credenciados MEC que vão prestar o TEA. Extensivo anual, bianual e trianual.",
       tags: ["TEA", "Anual · Bianual · Trianual"],
-      tracks: ["extensivo", "intensivo"]
+      tracks: ["extensivo", "intensivo", "segunda-fase"]
     },
     {
       id: "tea",
@@ -46,7 +46,7 @@ window.SITE = {
       tagline: "Título de Especialista em Anestesiologia",
       desc: "Preparação focada na prova do TEA, nas versões Regular e Elite, com trilha intensiva e segunda fase.",
       tags: ["Regular", "Elite", "Intensivo"],
-      tracks: ["extensivo", "intensivo"]
+      tracks: ["extensivo", "intensivo", "segunda-fase"]
     },
     {
       id: "tsa",
@@ -54,9 +54,9 @@ window.SITE = {
       short: "TSA",
       icon: "star",
       tagline: "Título Superior em Anestesiologia",
-      desc: "Preparação para o TSA, nas versões Regular e Elite. Conteúdo avançado para quem busca o título superior.",
-      tags: ["Anual", "Regular · Elite"],
-      tracks: ["extensivo"]
+      desc: "Preparação para o TSA, nas versões Regular e Elite. Extensivo, intensivo de reta final e segunda fase.",
+      tags: ["Regular · Elite", "Intensivo", "Segunda Fase"],
+      tracks: ["extensivo", "intensivo", "segunda-fase"]
     },
     {
       id: "segunda-fase",
@@ -115,6 +115,10 @@ window.SITE = {
     { id:"hiit-me", group:"residentes-sba", track:"intensivo", name:"HIIT ME", tagline:"Reta final de alta intensidade para a prova ME.", badge:{text:"Reta final",type:"hot"}, featured:true, price:null,
       feats:["Revisão intensiva dos temas quentes","Simulados cronometrados","Foco em desempenho na prova","Acesso por tempo limitado"] },
 
+    /* ===== RESIDENTES SBA — SEGUNDA FASE (TSA) ===== */
+    { id:"segunda-fase-tsa-sba", group:"residentes-sba", track:"segunda-fase", name:"Segunda Fase TSA", tagline:"Treino dedicado para a 2ª fase do TSA.", price:null,
+      feats:["Simulações da prova prática/oral","Casos clínicos comentados","Treino de argumentação e conduta"] },
+
     /* ===== RESIDENTES MEC — EXTENSIVOS ===== */
     { id:"tea-trianual", group:"residentes-mec", track:"extensivo", name:"TEA Trianual", tagline:"Preparação TEA distribuída em 3 anos.", badge:{text:"Mais tempo de acesso",type:"primary"}, featured:true, price:null,
       feats:["Trilha TEA completa","3 anos de acesso","Banco de questões + simulados","Atualizações incluídas"] },
@@ -126,7 +130,9 @@ window.SITE = {
     /* ===== RESIDENTES MEC — INTENSIVOS ===== */
     { id:"hiit-tea-mec", group:"residentes-mec", track:"intensivo", name:"HIIT TEA", tagline:"Revisão intensiva de reta final para o TEA.", badge:{text:"Reta final",type:"hot"}, price:null,
       feats:["Revisão intensiva dos temas quentes","Simulados cronometrados","Foco em desempenho na prova"] },
-    { id:"segunda-fase-tea-mec", group:"residentes-mec", track:"intensivo", name:"Segunda Fase TEA", tagline:"Treino dedicado para a 2ª fase do TEA.", price:null,
+
+    /* ===== RESIDENTES MEC — SEGUNDA FASE ===== */
+    { id:"segunda-fase-tea-mec", group:"residentes-mec", track:"segunda-fase", name:"Segunda Fase TEA", tagline:"Treino dedicado para a 2ª fase do TEA.", price:null,
       feats:["Simulações da prova prática/oral","Casos clínicos comentados","Treino de argumentação"] },
 
     /* ===== TEA — EXTENSIVOS (Regular / Elite) ===== */
@@ -137,13 +143,22 @@ window.SITE = {
     /* ===== TEA — INTENSIVOS ===== */
     { id:"hiit-tea", group:"tea", track:"intensivo", name:"HIIT TEA", tagline:"Reta final de alta intensidade para o TEA.", badge:{text:"Reta final",type:"hot"}, featured:true, price:null,
       feats:["Revisão intensiva dos temas quentes","Simulados cronometrados","Foco em desempenho na prova"] },
-    { id:"segunda-fase-tea", group:"tea", track:"intensivo", name:"Segunda Fase TEA", tagline:"Treino dedicado para a 2ª fase do TEA.", price:null,
+
+    /* ===== TEA — SEGUNDA FASE ===== */
+    { id:"segunda-fase-tea", group:"tea", track:"segunda-fase", name:"Segunda Fase TEA", tagline:"Treino dedicado para a 2ª fase do TEA.", price:null,
       feats:["Simulações da prova prática/oral","Casos clínicos comentados","Treino de argumentação"] },
 
     /* ===== TSA — EXTENSIVO (Regular / Elite) ===== */
     { id:"tsa-anual", group:"tsa", track:"extensivo", name:"TSA Anual", tagline:"Preparação para o Título Superior em Anestesiologia.", badge:{text:"Regular e Elite",type:"primary"}, featured:true, price:null,
       feats:["Trilha TSA completa","1 ano de acesso","Banco de questões + simulados avançados"],
       tiers:[ {name:"TSA Regular", price:null, note:"Aulas + material + questões"}, {name:"TSA Elite", price:null, note:"Regular + mentorias, correções e extras", elite:true} ] },
+
+    /* ===== TSA — INTENSIVOS (adicionar aqui quando houver; ex.: HIIT TSA) ===== */
+    /* (sem cursos por enquanto — a página de intensivos do TSA mostra "em breve") */
+
+    /* ===== TSA — SEGUNDA FASE ===== */
+    { id:"segunda-fase-tsa", group:"tsa", track:"segunda-fase", name:"Segunda Fase TSA", tagline:"Treino dedicado para a 2ª fase do TSA.", price:null,
+      feats:["Simulações da prova prática/oral","Casos clínicos comentados","Treino de argumentação e conduta"] },
 
     /* ===== SEGUNDA FASE (categoria própria) ===== */
     { id:"segunda-fase-tsa-cat", group:"segunda-fase", track:"unico", name:"Segunda Fase TSA", tagline:"Preparação para a 2ª fase do TSA.", price:null,

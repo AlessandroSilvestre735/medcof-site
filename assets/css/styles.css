@@ -311,6 +311,13 @@ main { flex: 1 0 auto; }
 .track-pill { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-sans); font-weight: 700; font-size: var(--text-sm); padding: 7px 15px; border-radius: 999px; margin-bottom: 6px; }
 .track-pill.ext { background: #EAEAEC; color: #3F3F46; }
 .track-pill.int { background: color-mix(in srgb, var(--color-primary) 13%, #fff); color: var(--color-primary-dark); }
+.track-pill.sf  { background: #E6EAF1; color: #3A4A63; }
+
+/* Estado "em breve" (trilha ainda sem cursos, ex.: Intensivo do TSA) */
+.empty-state { grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 48px 28px; background: var(--color-surface); border: 1px dashed var(--color-border-strong); border-radius: var(--radius-lg); color: var(--color-muted-fg); }
+.empty-state svg { width: 40px; height: 40px; color: var(--color-primary); }
+.empty-state p { max-width: 460px; }
+.empty-state a { color: var(--color-primary-dark); font-weight: 600; }
 
 /* Aviso "páginas separadas" para o Dev/aluno */
 .compare-note { display: flex; gap: 12px; align-items: flex-start; background: var(--color-surface); border: 1px solid var(--color-border); border-left: 4px solid var(--color-primary); border-radius: var(--radius); padding: 16px 18px; margin-top: 26px; }
