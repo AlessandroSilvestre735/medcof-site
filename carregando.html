@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-year="2025">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preparando seus cursos… | MedCof</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <main class="loading-screen">
+    <div class="loading-inner">
+      <span class="brand-mark loading-mark">M</span>
+      <div class="loading-spinner" aria-hidden="true"><span></span><span></span><span></span></div>
+      <p class="loading-title" role="status" aria-live="polite">Preparando seus cursos…</p>
+      <p class="loading-sub" id="loading-sub"></p>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var params;
+      try { params = new URLSearchParams(location.search); } catch (e) { params = null; }
+      var to = params && params.get("to");
+      var label = (params && params.get("label")) || "";
+      var subEl = document.getElementById("loading-sub");
+      if (label && subEl) subEl.textContent = label;
+
+      function fallback(){ location.replace("index.html"); }
+      if (!to) { fallback(); return; }
+
+      var url;
+      try { url = new URL(to, location.href); } catch (e) { fallback(); return; }
+      // Segurança: só redireciona dentro do próprio site.
+      if (url.origin !== location.origin) { fallback(); return; }
+
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      setTimeout(function () { location.replace(url.href); }, reduce ? 350 : 1200);
+    })();
+  </script>
+</body>
+</html>

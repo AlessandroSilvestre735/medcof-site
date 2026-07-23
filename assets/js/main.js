@@ -330,11 +330,29 @@
     return out;
   }
 
+  function yearParam(){
+    try { return new URLSearchParams(window.location.search).get("ano"); } catch(e){ return null; }
+  }
+
   function renderProductsByYear(gid, track, sel){
     var box = document.querySelector(sel||"#products"); if(!box) return;
     var all = productsOf(gid, track);
     var years = YEARS.filter(function(yr){ return cardsForYear(all, yr).length; });
     if(!years.length){ return fillProducts(box, all); }
+
+    // Voltou da tela de carregamento com ?ano=rX -> mostra direto os cursos do ano.
+    var pre = yearParam();
+    var chosen = pre && years.filter(function(y){ return y.id===pre; })[0];
+    if(chosen){
+      box.innerHTML = cardsForYear(all, chosen);
+      var bar = el(''+
+        '<div class="access-chooser"><div class="access-selected">'+
+          '<span>Mostrando cursos para <b>'+chosen.label+' — '+chosen.tag+'</b></span>'+
+          '<a class="btn btn-outline" href="extensivos.html">Trocar ano</a>'+
+        '</div></div>');
+      box.parentNode.insertBefore(bar, box);
+      return all.length;
+    }
 
     var opts = years.map(function(yr){
       return ''+
@@ -353,43 +371,25 @@
         '<div class="access-ask reveal">'+
           '<span class="eyebrow">Passo 1 de 2</span>'+
           '<h2 class="access-q">Em qual ano da residência você está?</h2>'+
-          '<p class="access-help">Escolha o seu ano para ver os cursos indicados. Você pode trocar quando quiser.</p>'+
+          '<p class="access-help">Escolha o seu ano para ver os cursos indicados para o seu momento.</p>'+
         '</div>'+
         '<div class="access-grid" data-stagger>'+opts+'</div>'+
-        '<div class="access-selected" hidden>'+
-          '<span>Mostrando cursos para <b class="access-sel-label"></b></span>'+
-          '<button type="button" class="btn btn-outline access-change">Trocar ano</button>'+
-        '</div>'+
       '</div>');
 
     box.parentNode.insertBefore(chooser, box);
     box.hidden = true;
 
-    var ask = chooser.querySelector(".access-ask");
-    var grid = chooser.querySelector(".access-grid");
-    var selRow = chooser.querySelector(".access-selected");
-    var selLabel = chooser.querySelector(".access-sel-label");
-
-    function choose(id){
+    function goYear(id){
       var yr = YEARS.filter(function(y){ return y.id===id; })[0]; if(!yr) return;
-      box.innerHTML = cardsForYear(all, yr);
-      box.hidden = false;
-      ask.hidden = true; grid.hidden = true;
-      selRow.hidden = false;
-      selLabel.textContent = yr.label + " — " + yr.tag;
-      box.scrollIntoView({behavior:"smooth", block:"start"});
-    }
-    function reopen(){
-      box.hidden = true;
-      ask.hidden = false; grid.hidden = false;
-      selRow.hidden = true;
-      chooser.scrollIntoView({behavior:"smooth", block:"start"});
+      var target = new URL("extensivos.html?ano="+yr.id, window.location.href).href;
+      var loader = new URL(ROOT+"carregando.html", window.location.href).href;
+      window.location.href = loader + "?to=" + encodeURIComponent(target) +
+        "&label=" + encodeURIComponent(yr.label + " · " + yr.tag);
     }
 
-    grid.querySelectorAll(".access-opt").forEach(function(b){
-      b.addEventListener("click", function(){ choose(b.getAttribute("data-year")); });
+    chooser.querySelectorAll(".access-opt").forEach(function(b){
+      b.addEventListener("click", function(){ goYear(b.getAttribute("data-year")); });
     });
-    chooser.querySelector(".access-change").addEventListener("click", reopen);
     return all.length;
   }
 
