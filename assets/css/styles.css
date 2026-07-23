@@ -36,10 +36,10 @@
   --color-gold:           #B45309;  /* selo "Elite" */
   --color-gold-bg:        #FCEFC7;
 
-  /* Texto claro para o que fica DIRETO sobre o fundo escuro (chumbo→smoke) */
-  --color-on-bg:          #EEF1F5;  /* títulos/textos claros sobre o fundo */
-  --color-on-bg-muted:    #C2C8D0;  /* apoio/subtítulos sobre o fundo */
-  --color-primary-bright: #FF4D52;  /* vermelho vivo p/ texto da marca sobre o fundo escuro */
+  /* Tema light: texto sobre o fundo claro fica escuro */
+  --color-on-bg:          #18181B;  /* títulos/textos sobre o fundo (escuro) */
+  --color-on-bg-muted:    #6B6B70;  /* apoio/subtítulos sobre o fundo */
+  --color-primary-bright: #C1272D;  /* vermelho da marca p/ destaques */
 
   /* Tipografia — Mona Sans (títulos, fonte da marca) + sistema no corpo */
   --font-sans: 'Mona Sans Variable', 'Mona Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -198,7 +198,7 @@ main { flex: 1 0 auto; }
 .hero-actions { justify-content: center; }
 .hero-trust { justify-content: center; gap: clamp(20px, 4vw, 44px); }
 .hero h1 { font-size: var(--text-5xl); font-weight: 800; color: var(--color-on-bg); }
-.hero h1 .grad { background: linear-gradient(120deg, #FFFFFF, #C9CFD8); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero h1 .grad { background: linear-gradient(120deg, var(--color-primary-dark), var(--color-accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .hero p.lead { font-size: var(--text-xl); color: var(--color-on-bg-muted); margin-top: 20px; max-width: 560px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
 .hero-trust { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 34px; }
@@ -318,7 +318,7 @@ main { flex: 1 0 auto; }
 .page-head { background: transparent; border-bottom: 1px solid var(--color-border); padding-block: clamp(28px, 5vw, 52px); }
 .breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: var(--text-sm); color: var(--color-on-bg-muted); margin-bottom: 16px; }
 .breadcrumb a { color: var(--color-on-bg-muted); }
-.breadcrumb a:hover { color: #fff; }
+.breadcrumb a:hover { color: var(--color-primary-dark); }
 .breadcrumb .sep { opacity: .5; }
 .breadcrumb b { color: var(--color-on-bg); font-weight: 600; }
 .page-head h1 { font-size: var(--text-4xl); color: var(--color-on-bg); }
@@ -390,20 +390,20 @@ main { flex: 1 0 auto; }
    ---------------------------------------------------------------------------- */
 .bg-fx {
   position: fixed; inset: 0; z-index: -2; overflow: hidden;
-  /* Degradê: cinza chumbo (topo) -> smoke gray (base). Luz suave no topo. */
+  /* Tema light: degradê claro (smoke gray) com leve luz no topo. */
   background:
-    radial-gradient(120% 90% at 50% -8%, rgba(190,200,214,.16) 0%, rgba(190,200,214,0) 46%),
-    linear-gradient(158deg, #23262C 0%, #333842 40%, #474E59 70%, #626A76 100%);
+    radial-gradient(120% 90% at 50% -8%, rgba(255,255,255,.65) 0%, rgba(255,255,255,0) 46%),
+    linear-gradient(160deg, #F3F4F6 0%, #E6E9ED 44%, #DADEE3 74%, #D2D7DD 100%);
 }
 .bg-fx .orb { position: absolute; border-radius: 50%; filter: blur(90px); will-change: transform; }
 .bg-fx .orb-1 { width: 54vmax; height: 54vmax; left: -18vmax; top: -22vmax;
-  background: radial-gradient(circle at center, rgba(150,163,184,.26), rgba(150,163,184,0) 66%);
+  background: radial-gradient(circle at center, rgba(88,101,122,.22), rgba(88,101,122,0) 66%);
   animation: drift1 30s ease-in-out infinite alternate; }
 .bg-fx .orb-2 { width: 48vmax; height: 48vmax; right: -16vmax; top: 0;
-  background: radial-gradient(circle at center, rgba(255,255,255,.16), rgba(255,255,255,0) 62%);
+  background: radial-gradient(circle at center, rgba(255,255,255,.55), rgba(255,255,255,0) 62%);
   animation: drift2 36s ease-in-out infinite alternate; }
 .bg-fx .orb-3 { width: 44vmax; height: 44vmax; left: 24vw; bottom: -24vmax;
-  background: radial-gradient(circle at center, rgba(193,39,45,.20), rgba(193,39,45,0) 68%);
+  background: radial-gradient(circle at center, rgba(193,39,45,.12), rgba(193,39,45,0) 68%);
   animation: drift3 42s ease-in-out infinite alternate; }
 .bg-grain {
   position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .05;
