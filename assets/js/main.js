@@ -614,12 +614,14 @@
     var box = document.querySelector(sel||"#feature-sections"); if(!box || !S.features) return;
     box.innerHTML = S.features.map(function(f, i){
       var pts = (f.points||[]).map(function(p){ return '<li>'+icon("check")+'<span>'+p+'</span></li>'; }).join("");
+      var demoBtn = f.demo ? '<div class="feat-sec-cta"><button type="button" class="btn btn-secondary" data-demo-open>'+f.demo.label+' '+icon("arrow")+'</button></div>' : '';
       var copy = ''+
         '<div class="feat-sec-copy reveal">'+
           '<span class="eyebrow">'+icon(f.icon)+' '+(f.eyebrow||"Funcionalidade")+'</span>'+
           '<h2 class="section-title">'+f.title+'</h2>'+
           '<p class="feat-sec-desc">'+f.desc+'</p>'+
           (pts?'<ul class="feat-sec-list">'+pts+'</ul>':'')+
+          demoBtn+
         '</div>';
       var visual = ''+
         '<div class="feat-sec-visual reveal">'+
@@ -633,6 +635,52 @@
         '</div>';
       return '<section class="section feat-sec'+(i%2?" reverse":"")+'"><div class="container feat-sec-grid">'+copy+visual+'</div></section>';
     }).join("");
+
+    // Botão "Veja como é uma questão comentada" -> modal com exemplo
+    var demoFeat = S.features.filter(function(f){ return f.demo; })[0];
+    if(demoFeat){
+      var openDemo = buildQuestaoModal(demoFeat.demo);
+      box.querySelectorAll("[data-demo-open]").forEach(function(b){ b.addEventListener("click", openDemo); });
+    }
+  }
+
+  /* ---- Modal: exemplo de questão comentada ---- */
+  function buildQuestaoModal(demo){
+    var existing = document.getElementById("demo-modal");
+    if(existing) return existing.__open;
+
+    var alts = (demo.alternativas||[]).map(function(a,i){
+      var letra = String.fromCharCode(65+i);
+      return '<li class="q-alt'+(a.correct?" correct":"")+'">'+
+        '<span class="q-letra">'+letra+'</span>'+
+        '<span class="q-alt-text">'+a.t+(a.correct?' '+icon("check"):'')+'</span>'+
+      '</li>';
+    }).join("");
+    var coment = (demo.comentario||[]).map(function(p){ return '<p>'+p+'</p>'; }).join("");
+
+    var modal = el(''+
+      '<div class="modal-overlay" id="demo-modal" hidden>'+
+        '<div class="modal" role="dialog" aria-modal="true" aria-label="Exemplo de questão comentada">'+
+          '<button type="button" class="modal-close" aria-label="Fechar">'+icon("close")+'</button>'+
+          '<div class="modal-scroll">'+
+            '<span class="track-pill ext">Exemplo · Questão comentada</span>'+
+            '<p class="q-enunciado">'+demo.enunciado+'</p>'+
+            '<ul class="q-alts">'+alts+'</ul>'+
+            '<div class="q-answer">'+icon("check")+' Resposta correta: <b>'+demo.correta+'</b></div>'+
+            '<div class="q-comment"><h4>Comentário do especialista</h4>'+coment+
+              '<p class="q-video-note">'+icon("chat")+' Na plataforma, cada questão traz também o comentário em vídeo.</p>'+
+            '</div>'+
+          '</div>'+
+        '</div>'+
+      '</div>');
+    document.body.appendChild(modal);
+
+    function open(){ modal.hidden = false; document.body.style.overflow = "hidden"; var c = modal.querySelector(".modal-close"); if(c) c.focus(); }
+    function close(){ modal.hidden = true; document.body.style.overflow = ""; }
+    modal.addEventListener("click", function(e){ if(e.target===modal || (e.target.closest && e.target.closest(".modal-close"))) close(); });
+    document.addEventListener("keydown", function(e){ if(e.key==="Escape" && !modal.hidden) close(); });
+    modal.__open = open;
+    return open;
   }
 
   /* ---- RENDER: Coordenadores e Professores (carrossel) ---- */

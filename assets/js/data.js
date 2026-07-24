@@ -184,7 +184,23 @@ window.SITE = {
       points:["Foco nos temas que mais caem nas provas","Conteúdo estratégico e personalizado","Fixação diária, sem deixar nada escapar"] },
     { id:"questoes-comentadas", icon:"doc", title:"Questões Comentadas", eyebrow:"Banco de questões",
       desc:"Cada questão vem acompanhada de comentários em texto e vídeo dos nossos especialistas. Entenda o raciocínio médico, aprenda com cada erro e transforme sua prática em conhecimento sólido.",
-      points:["Comentários em texto e vídeo dos especialistas","Entenda o raciocínio por trás de cada alternativa","Aprenda com cada erro e evolua a cada questão"] },
+      points:["Comentários em texto e vídeo dos especialistas","Entenda o raciocínio por trás de cada alternativa","Aprenda com cada erro e evolua a cada questão"],
+      demo:{
+        label:"Veja como é uma questão comentada",
+        enunciado:"Paciente de 68 anos, hipertenso em uso crônico de enalapril, é submetido a colecistectomia sob anestesia geral. Na indução, evolui com hipotensão refratária à efedrina e à fenilefrina. Qual a conduta farmacológica mais adequada?",
+        alternativas:[
+          { t:"Aumentar progressivamente a dose de fenilefrina" },
+          { t:"Administrar atropina em bolus" },
+          { t:"Administrar vasopressina", correct:true },
+          { t:"Iniciar infusão de dobutamina" }
+        ],
+        correta:"C",
+        comentario:[
+          "Pacientes em uso crônico de inibidores da ECA (como o enalapril) podem apresentar hipotensão refratária aos vasopressores adrenérgicos durante a anestesia, por bloqueio do sistema renina-angiotensina.",
+          "Nesses casos, a vasopressina atua por uma via independente (receptores V1) e restaura o tônus vascular quando efedrina e fenilefrina não são suficientes.",
+          "Por isso a alternativa correta é a C. Insistir na fenilefrina (A) tende a ser ineficaz; a atropina (B) trata bradicardia, não a vasoplegia; e a dobutamina (D) pode piorar a hipotensão por vasodilatação periférica."
+        ]
+      } },
     { id:"flashcards", icon:"cards", title:"FlashCards", eyebrow:"Memorização",
       desc:"Flashcards interativos para memorizar conteúdos rapidamente. Estude em qualquer momento, revise conceitos-chave e fortaleça sua memória de longo prazo com metodologia de repetição espaçada.",
       points:["Memorização rápida com repetição espaçada","Estude em qualquer lugar, direto do celular","Reforço da memória de longo prazo"] }

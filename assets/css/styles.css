@@ -552,10 +552,35 @@ main { flex: 1 0 auto; }
 .feat-mock-lines { flex: 1; display: grid; gap: 12px; }
 .feat-mock-lines i { display: block; height: 12px; border-radius: 999px; background: var(--color-muted); }
 .feat-mock-lines i:first-child { background: color-mix(in srgb, var(--color-primary) 22%, var(--color-muted)); }
+.feat-sec-cta { margin-top: 26px; }
 @media (max-width: 820px) {
   .feat-sec-grid { grid-template-columns: 1fr; }
   .feat-sec.reverse .feat-sec-visual { order: 0; }
 }
+
+/* Modal — exemplo de questão comentada */
+.modal-overlay { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 20px; background: rgba(24,24,27,.55); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.modal-overlay[hidden] { display: none; }
+.modal { position: relative; width: 100%; max-width: 620px; max-height: 88vh; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; animation: modal-in .22s var(--ease); }
+@keyframes modal-in { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
+.modal-scroll { overflow-y: auto; max-height: 88vh; padding: clamp(26px, 4vw, 40px); }
+.modal-close { position: absolute; top: 14px; right: 14px; width: 40px; height: 40px; border-radius: 999px; background: var(--color-muted); border: 1px solid var(--color-border); display: grid; place-items: center; color: var(--color-foreground); z-index: 2; }
+.modal-close:hover { border-color: var(--color-primary); color: var(--color-primary-dark); }
+.modal-close svg { width: 20px; height: 20px; }
+.q-enunciado { font-size: var(--text-lg); color: var(--color-on-bg); line-height: 1.6; margin: 18px 0 20px; }
+.q-alts { display: grid; gap: 10px; }
+.q-alt { display: flex; gap: 12px; align-items: flex-start; padding: 13px 15px; border: 1px solid var(--color-border); border-radius: var(--radius); font-size: var(--text-sm); color: var(--color-foreground); }
+.q-alt .q-letra { font-family: var(--font-sans); font-weight: 700; color: var(--color-muted-fg); flex: none; }
+.q-alt.correct { border-color: var(--color-primary); background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface)); }
+.q-alt.correct .q-letra { color: var(--color-primary-dark); }
+.q-alt-text svg { width: 16px; height: 16px; color: var(--color-primary); vertical-align: -3px; }
+.q-answer { display: flex; align-items: center; gap: 8px; margin: 20px 0 4px; font-family: var(--font-sans); font-weight: 700; color: var(--color-primary-dark); }
+.q-answer svg { width: 18px; height: 18px; }
+.q-comment { margin-top: 16px; padding-top: 18px; border-top: 1px solid var(--color-border); }
+.q-comment h4 { font-size: var(--text-lg); margin-bottom: 6px; }
+.q-comment p { color: var(--color-muted-fg); font-size: var(--text-sm); line-height: 1.65; margin-top: 8px; }
+.q-video-note { display: flex; align-items: center; gap: 8px; color: var(--color-primary-dark) !important; font-weight: 600; margin-top: 16px; }
+.q-video-note svg { width: 18px; height: 18px; flex: none; }
 
 /* Professores (carrossel) */
 .prof-carousel { position: relative; }
