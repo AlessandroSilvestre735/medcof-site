@@ -16,82 +16,42 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="reveal">
-          <span class="eyebrow">Anestesiologia · ME · TEA · TSA</span>
-          <h1>Sua aprovação em Anestesiologia <span class="grad">começa pela trilha certa</span></h1>
-          <p class="lead">Escolha o caminho pelo seu momento de carreira e siga um plano feito para a sua prova. Sem ruído, sem comparações confusas — só o que você precisa estudar.</p>
+          <span class="eyebrow">A plataforma MedCof</span>
+          <h1>Uma plataforma inteira <span class="grad">a favor da sua aprovação</span></h1>
+          <p class="lead">IA de estudo, revisões inteligentes, questões comentadas e flashcards — tudo em um só painel, feito para você render mais em cada sessão de estudo.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary btn-lg" href="#funcionalidades">Conhecer a metodologia</a>
+            <a class="btn btn-primary btn-lg" href="#funcionalidades">Conhecer as funcionalidades</a>
             <a class="btn btn-outline btn-lg" href="matricula.html">Falar com a equipe</a>
           </div>
           <div class="hero-trust">
-            <div><b>ME · TEA · TSA</b><small>Todas as provas em um só lugar</small></div>
-            <div><b>Extensivo + Intensivo</b><small>Do começo à reta final</small></div>
-            <div><b>2ª Fase</b><small>Prática e argumentação</small></div>
+            <div><b>CofBot IA</b><small>Assistente de estudo inteligente</small></div>
+            <div><b>Revisões Núcleo</b><small>Foco no que mais cai</small></div>
+            <div><b>Questões + FlashCards</b><small>Prática e memorização</small></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- METODOLOGIA (foco principal da tela inicial) -->
-    <section class="section" id="funcionalidades">
+    <!-- FUNCIONALIDADES DO PAINEL — introdução -->
+    <section class="section-tight" id="funcionalidades">
       <div class="container">
         <div class="center reveal">
-          <span class="eyebrow">A metodologia MedCof</span>
-          <h2 class="section-title">Como a gente acelera a sua aprovação</h2>
-          <p class="section-sub">Tecnologia a favor do seu estudo: IA, revisões inteligentes, questões comentadas e flashcards — passe o mouse para explorar cada uma.</p>
-        </div>
-        <div class="feature-grid" id="features" style="margin-top:44px"></div>
-      </div>
-    </section>
-
-    <!-- POR QUE MEDCOF -->
-    <section class="section-tight">
-      <div class="container">
-        <div class="grid grid-3 reveal" data-stagger>
-          <div class="profile-card" style="cursor:default">
-            <div class="card-ic" data-ic="checklist"></div>
-            <h3>Trilha guiada</h3>
-            <p>Você sempre sabe o próximo passo. A navegação te leva do objetivo até o curso ideal, sem se perder.</p>
-          </div>
-          <div class="profile-card" style="cursor:default">
-            <div class="card-ic" data-ic="layers"></div>
-            <h3>Extensivo e Intensivo</h3>
-            <p>Base sólida durante o ano e revisão de alta intensidade na reta final — cada um no seu espaço.</p>
-          </div>
-          <div class="profile-card" style="cursor:default">
-            <div class="card-ic" data-ic="certificate"></div>
-            <h3>Foco em aprovação</h3>
-            <p>Conteúdo, banco de questões e simulados desenhados para o que realmente cai nas provas de Anestesiologia.</p>
-          </div>
+          <span class="eyebrow">O painel MedCof</span>
+          <h2 class="section-title">Tudo o que a plataforma faz por você</h2>
+          <p class="section-sub">Conheça, uma a uma, as funcionalidades que aceleram o seu estudo e a sua aprovação.</p>
         </div>
       </div>
     </section>
 
-    <!-- COORDENADORES E PROFESSORES -->
-    <section class="section-tight" id="coordenadores">
-      <div class="container">
-        <div class="center reveal">
-          <span class="eyebrow">Quem ensina</span>
-          <h2 class="section-title">Coordenadores e <span class="accent">professores</span></h2>
-          <p class="section-sub">Profissionais experientes e titulados, dedicados à sua formação de excelência.</p>
-        </div>
-        <div class="prof-carousel" id="professors" style="margin-top:38px"></div>
-      </div>
-    </section>
-
-    <!-- PLANO TRIANUAL -->
-    <section class="section-tight" id="plano-trianual">
-      <div class="container">
-        <div class="reveal" id="plano"></div>
-      </div>
-    </section>
+    <!-- FUNCIONALIDADES DO PAINEL — uma seção por funcionalidade (CofBot, Revisões, etc.) -->
+    <div id="feature-sections"></div>
 
     <!-- CTA -->
     <section class="section">
       <div class="container">
         <div class="cta-band reveal">
-          <h2>Ainda em dúvida sobre a melhor trilha?</h2>
-          <p>Fale com a nossa equipe e receba uma recomendação personalizada para o seu momento de carreira.</p>
+          <h2>Estude com a plataforma mais completa de Anestesiologia</h2>
+          <p>Todas essas funcionalidades trabalhando juntas pela sua aprovação. Fale com a nossa equipe e comece hoje.</p>
           <a class="btn btn-primary btn-lg" href="matricula.html">Falar com a equipe MedCof</a>
         </div>
       </div>
@@ -104,9 +64,7 @@
   <script src="assets/js/main.js"></script>
   <script>
     MedCof.renderChrome(null);
-    MedCof.renderFeatures("#features");
-    MedCof.renderProfessors("#professors");
-    MedCof.renderPlano("#plano");
+    MedCof.renderFeatureSections("#feature-sections");
     // preenche os ícones marcados com data-ic
     document.querySelectorAll("[data-ic]").forEach(function(n){ n.innerHTML = MedCof.icon(n.getAttribute("data-ic")); });
   </script>

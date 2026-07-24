@@ -176,14 +176,18 @@ window.SITE = {
      FUNCIONALIDADES DA PLATAFORMA (seção de destaque na home)
      -------------------------------------------------------------------------- */
   features: [
-    { id:"cofbot", icon:"chat", title:"CofBot IA",
-      desc:"Seu assistente de estudo inteligente. Localize questões, encontre trechos exatos nas aulas e tire dúvidas em segundos. Menos tempo perdido, mais resultado e mais foco no que realmente importa." },
-    { id:"revisoes-nucleo", icon:"checklist", title:"Revisões Núcleo",
-      desc:"Revisões inteligentes nos temas mais cobrados. Conteúdo estratégico e personalizado que fixa o aprendizado e garante que nada escape na hora da prova, reforçando sua preparação todos os dias." },
-    { id:"questoes-comentadas", icon:"doc", title:"Questões Comentadas",
-      desc:"Cada questão vem acompanhada de comentários em texto e vídeo dos nossos especialistas. Entenda o raciocínio médico, aprenda com cada erro e transforme sua prática em conhecimento sólido." },
-    { id:"flashcards", icon:"cards", title:"FlashCards",
-      desc:"Flashcards interativos para memorizar conteúdos rapidamente. Estude em qualquer momento, revise conceitos-chave e fortaleça sua memória de longo prazo com metodologia de repetição espaçada." }
+    { id:"cofbot", icon:"chat", title:"CofBot IA", eyebrow:"Assistente de estudo",
+      desc:"Seu assistente de estudo inteligente. Localize questões, encontre trechos exatos nas aulas e tire dúvidas em segundos. Menos tempo perdido, mais resultado e mais foco no que realmente importa.",
+      points:["Busca inteligente por questões e trechos de aula","Respostas em segundos, direto na plataforma","Menos tempo procurando, mais tempo estudando"] },
+    { id:"revisoes-nucleo", icon:"checklist", title:"Revisões Núcleo", eyebrow:"Revisão inteligente",
+      desc:"Revisões inteligentes nos temas mais cobrados. Conteúdo estratégico e personalizado que fixa o aprendizado e garante que nada escape na hora da prova, reforçando sua preparação todos os dias.",
+      points:["Foco nos temas que mais caem nas provas","Conteúdo estratégico e personalizado","Fixação diária, sem deixar nada escapar"] },
+    { id:"questoes-comentadas", icon:"doc", title:"Questões Comentadas", eyebrow:"Banco de questões",
+      desc:"Cada questão vem acompanhada de comentários em texto e vídeo dos nossos especialistas. Entenda o raciocínio médico, aprenda com cada erro e transforme sua prática em conhecimento sólido.",
+      points:["Comentários em texto e vídeo dos especialistas","Entenda o raciocínio por trás de cada alternativa","Aprenda com cada erro e evolua a cada questão"] },
+    { id:"flashcards", icon:"cards", title:"FlashCards", eyebrow:"Memorização",
+      desc:"Flashcards interativos para memorizar conteúdos rapidamente. Estude em qualquer momento, revise conceitos-chave e fortaleça sua memória de longo prazo com metodologia de repetição espaçada.",
+      points:["Memorização rápida com repetição espaçada","Estude em qualquer lugar, direto do celular","Reforço da memória de longo prazo"] }
   ],
 
   /* --------------------------------------------------------------------------

@@ -609,6 +609,32 @@
     play();
   }
 
+  /* ---- RENDER: Funcionalidades em seções próprias (home) ---- */
+  function renderFeatureSections(sel){
+    var box = document.querySelector(sel||"#feature-sections"); if(!box || !S.features) return;
+    box.innerHTML = S.features.map(function(f, i){
+      var pts = (f.points||[]).map(function(p){ return '<li>'+icon("check")+'<span>'+p+'</span></li>'; }).join("");
+      var copy = ''+
+        '<div class="feat-sec-copy reveal">'+
+          '<span class="eyebrow">'+icon(f.icon)+' '+(f.eyebrow||"Funcionalidade")+'</span>'+
+          '<h2 class="section-title">'+f.title+'</h2>'+
+          '<p class="feat-sec-desc">'+f.desc+'</p>'+
+          (pts?'<ul class="feat-sec-list">'+pts+'</ul>':'')+
+        '</div>';
+      var visual = ''+
+        '<div class="feat-sec-visual reveal">'+
+          '<div class="feat-mock">'+
+            '<div class="feat-mock-bar"><span></span><span></span><span></span></div>'+
+            '<div class="feat-mock-body">'+
+              '<div class="feat-mock-ic">'+icon(f.icon)+'</div>'+
+              '<div class="feat-mock-lines"><i style="width:82%"></i><i style="width:60%"></i><i style="width:71%"></i><i style="width:48%"></i></div>'+
+            '</div>'+
+          '</div>'+
+        '</div>';
+      return '<section class="section feat-sec'+(i%2?" reverse":"")+'"><div class="container feat-sec-grid">'+copy+visual+'</div></section>';
+    }).join("");
+  }
+
   /* ---- RENDER: Coordenadores e Professores (carrossel) ---- */
   function renderProfessors(sel){
     var box = document.querySelector(sel||"#professors"); if(!box || !S.professors) return;
@@ -691,7 +717,7 @@
     icon: icon, link: link, groupById: groupById, productsOf: productsOf, pageOf: pageOf, ctaHref: ctaHref,
     renderChrome: renderChrome, renderGroups: renderGroups, renderHub: renderHub,
     renderProducts: renderProducts, renderProductsByYear: renderProductsByYear, renderProductPage: renderProductPage, productHref: productHref, renderBreadcrumb: renderBreadcrumb,
-    renderFeatures: renderFeatures, renderProfessors: renderProfessors, renderPlano: renderPlano
+    renderFeatures: renderFeatures, renderFeatureSections: renderFeatureSections, renderProfessors: renderProfessors, renderPlano: renderPlano
   };
 
   /* ---- carrossel de tiers (Elite -> Regular pela setinha) ---- */
